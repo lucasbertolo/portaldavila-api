@@ -1,22 +1,23 @@
 const express = require("express");
-const path = require('path');
-const cors = require('cors');
+// const db = require("./db");
+// const path = require('path');
+// const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
-//TODO WHITELIST 
+//TODO - WHITELIST 
 
-const server = require('http').Server(app); 
+// const server = require('http').Server(app); 
 
 
-//middlewaress
+//middlewares
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true})) //conseguir baixar arquivos do usuario
+// app.use(express.urlencoded({extended: true}))
 
 
-app.use(require('./routes')); //pega as rotas 
+app.use(require('./routes')); 
 
-server.listen(process.env.PORT || 3000); //ouve tanto websockets quanto http
+app.listen(3000); 
