@@ -1,6 +1,6 @@
 var knex = require('knex')({
     client: 'mysql',
-    version: '8.0.17',
+    version: '5.7',
     connection: {
       host : '127.0.0.1',
       user : 'root',

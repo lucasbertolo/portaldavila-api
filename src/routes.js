@@ -1,7 +1,13 @@
 const express = require('express');
-const routes = express.Router();
 const knex = require('./db');
 
+const routes = express.Router();
+
+const PropertyController = require('./controllers/PropertyController')
+const UserController = require('./controllers/UserController')
+const PhotosController = require('./controllers/PhotosController')
+
+//General requests
 routes.get('/', function(req,res){
         // const { id } = req.params;
         knex.select('*').from('property')
@@ -10,6 +16,14 @@ routes.get('/', function(req,res){
             })
             .catch(err => res.status(400).json(err))
 })        
+
+//User requests
+
+//Property requests
+
+//Photos requests
+
+
 
 
 module.exports = routes;
