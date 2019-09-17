@@ -3,14 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/lucasbertolo/portaldavila-api.git",
-  "author": "Lucas <lucas.bertolo@gatec.com.br>",
+  "author": "Lucas <lucasbertolo.github.io>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.19.4",
     "mysql": "^2.17.1"
   },
   "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "nodemon": "^1.19.2"
   }
 }
