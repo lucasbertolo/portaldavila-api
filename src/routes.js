@@ -15,5 +15,6 @@ routes.post('/user', (req, res) => { UserController.newUser(req, res, db); });
 routes.delete('/user/:id', (req, res) => { UserController.removeUser(req, res, db); });
 
 // Property requests
+routes.get('/property/:id', (req, res) => { PropertyController.getProperty(req, res, db); });
 
 module.exports = routes;
