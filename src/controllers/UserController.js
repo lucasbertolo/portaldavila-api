@@ -59,7 +59,11 @@ const updateUser = (req, res, db) => {
       pass,
       login,
     })
-    .then(() => res.status(200).json('User updated!'))
+    .then((data) => {
+      if (data === 1) {
+        res.status(200).json('User updated');
+      } else res.status(400).json('Id inexistent');
+    })
     .catch((err) => res.status(400).json(`erro - ${err}`));
 };
 
