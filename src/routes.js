@@ -5,7 +5,7 @@ const routes = express.Router();
 
 const PropertyController = require('./controllers/PropertyController');
 const UserController = require('./controllers/UserController');
-const PhotosController = require('./controllers/PhotosController');
+// const PhotosController = require('./controllers/PhotosController');
 
 // User requests
 routes.get('/user/:id', (req, res) => { UserController.getUser(req, res, db); });
@@ -25,6 +25,8 @@ routes.put('/property/:id', (req, res) => { PropertyController.updateProperty(re
 routes.post('/property', (req, res) => { PropertyController.newProperty(req, res, db); });
 
 routes.delete('/property/:id', (req, res) => { PropertyController.removeProperty(req, res, db); });
+
+// Photos Controller
 
 
 module.exports = routes;
