@@ -1,11 +1,11 @@
 const express = require('express');
 // const db = require("./db");
 // const path = require('path');
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 
-// app.use(cors());
+app.use(cors());
 
 // TODO - WHITELIST
 
@@ -20,4 +20,4 @@ app.use(express.json());
 
 app.use(require('./routes'));
 
-app.listen(3000);
+app.listen(8000);
