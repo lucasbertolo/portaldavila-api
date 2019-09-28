@@ -30,7 +30,6 @@ const getAllProperty = (req, res, db) => {
 // Retorno Json com objeto com imovel
 const getProperty = (req, res, db) => {
   const { id } = req.params;
-
   db.select('*').from('property').where({ id })
     .then((usr) => {
       if (usr.length) {
@@ -83,14 +82,11 @@ const newProperty = (req, res, db) => {
 // Merge dados e update entidade
 const updateProperty = (req, res, db) => {
   const { id } = req.params;
-  const {
-    updateAttr,
-  } = req.body;
 
   db('property')
     .where({ id })
     .update({
-      ...updateAttr,
+      ...req.body,
     })
     .then((data) => {
       if (data === 1) {
