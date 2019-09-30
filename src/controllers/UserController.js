@@ -1,7 +1,7 @@
 
 // Retorno de usuarios filtrando por id
 
-const getUser = (req, res, db) => {
+const Get = (req, res, db) => {
   const { id } = req.params;
 
   db.select('*').from('user').where({ id })
@@ -17,7 +17,7 @@ const getUser = (req, res, db) => {
 
 // Cadastro de novo usuario
 
-const newUser = (req, res, db) => {
+const Add = (req, res, db) => {
   const {
     pass,
     login,
@@ -40,7 +40,7 @@ const newUser = (req, res, db) => {
 
 // Atualização de usuario
 
-const updateUser = (req, res, db) => {
+const Update = (req, res, db) => {
   const { id } = req.params;
   const {
     pass,
@@ -68,7 +68,7 @@ const updateUser = (req, res, db) => {
 };
 
 // Remover usuario
-const removeUser = (req, res, db) => {
+const Remove = (req, res, db) => {
   const { id } = req.params;
 
   // Checar por token ou validar autorizacao para apagar usuario
@@ -83,8 +83,8 @@ const removeUser = (req, res, db) => {
 // trocar tipo de usuario
 
 module.exports = {
-  getUser,
-  updateUser,
-  newUser,
-  removeUser,
+  Get,
+  Update,
+  Add,
+  Remove,
 };

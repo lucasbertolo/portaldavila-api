@@ -8,7 +8,7 @@
 // Fotos - Chamar PhotoController
 // Tratamento erro caso array vazio
 // Retornar json com array
-const getAllProperty = (req, res, db) => {
+const GetAll = (req, res, db) => {
   db.select('*').from('property')
     .then((prop) => {
       if (prop.length) {
@@ -28,7 +28,7 @@ const getAllProperty = (req, res, db) => {
 // Disponibilidade visita
 // Tratamento caso fotos vazias
 // Retorno Json com objeto com imovel
-const getProperty = (req, res, db) => {
+const Get = (req, res, db) => {
   const { id } = req.params;
   db.select('*').from('property').where({ id })
     .then((usr) => {
@@ -51,7 +51,7 @@ const getProperty = (req, res, db) => {
 // Tratamento caso falte dados
 // Chamar photoController para inserir imagem em servidor externo
 // Salvar id retornado na tabela de photos
-const newProperty = (req, res, db) => {
+const Add = (req, res, db) => {
   const {
     neighborhood_id,
     position,
@@ -59,6 +59,8 @@ const newProperty = (req, res, db) => {
     purpose_id,
     type_id,
     creator_id,
+    area,
+    building_area,
   } = req.body;
 
   // Creator ID - pegar sempre do usuario fazendo a atualizacao
@@ -68,6 +70,8 @@ const newProperty = (req, res, db) => {
       neighborhood_id,
       position,
       price,
+      area,
+      building_area,
       purpose_id,
       type_id,
       creator_id,
@@ -80,7 +84,7 @@ const newProperty = (req, res, db) => {
 // Atualização de imovel -> Controller Photos
 // Tratamento erro caso id nao exista
 // Merge dados e update entidade
-const updateProperty = (req, res, db) => {
+const Update = (req, res, db) => {
   const { id } = req.params;
 
   db('property')
@@ -100,7 +104,7 @@ const updateProperty = (req, res, db) => {
 
 
 // Delete Imovel -> Controller Photos
-const removeProperty = (req, res, db) => {
+const Remove = (req, res, db) => {
   const { id } = req.params;
 
   // Checar por token ou validar autorizacao para apagar usuario
@@ -119,9 +123,9 @@ const removeProperty = (req, res, db) => {
 
 
 module.exports = {
-  getProperty,
-  newProperty,
-  updateProperty,
-  removeProperty,
-  getAllProperty,
+  Get,
+  Add,
+  Update,
+  Remove,
+  GetAll,
 };
