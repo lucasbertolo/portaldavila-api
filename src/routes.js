@@ -4,6 +4,7 @@ const db = require('./db');
 const routes = express.Router();
 
 const User = require('./controllers/UserController');
+
 const Neighborhood = require('./controllers/NeighborhoodController');
 
 const Property = require('./controllers/PropertyController');
@@ -11,7 +12,7 @@ const PropertyType = require('./controllers/PropertyTypeController');
 const PropertyDetails = require('./controllers/PropertyDetailsController');
 const PropertyFeatures = require('./controllers/PropertyFeaturesController');
 
-// const PhotosController = require('./controllers/PhotosController');
+const PhotosController = require('./controllers/PhotosController');
 
 
 // User requests
@@ -36,6 +37,7 @@ routes.post('/property/details', (req, res) => { PropertyDetails.Add(req, res, d
 routes.post('/property/features', (req, res) => { PropertyFeatures.Add(req, res, db); });
 
 // Photos Controller
+routes.post('/sign_s3', (req, res) => { PhotosController.sign_s3(req, res); });
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });
