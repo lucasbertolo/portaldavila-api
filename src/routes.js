@@ -7,7 +7,7 @@ const User = require('./controllers/UserController');
 
 const Neighborhood = require('./controllers/NeighborhoodController');
 
-const Property = require('./controllers/PropertyController');
+const PropertyInfo = require('./controllers/PropertyInfoController');
 const PropertyType = require('./controllers/PropertyTypeController');
 const PropertyDetails = require('./controllers/PropertyDetailsController');
 const PropertyFeatures = require('./controllers/PropertyFeaturesController');
@@ -22,13 +22,13 @@ routes.post('/user', (req, res) => { User.Add(req, res, db); });
 routes.delete('/user/:id', (req, res) => { User.Remove(req, res, db); });
 
 // Property requests
-routes.get('/property/details/:id', (req, res) => Property.GetDetails(req, res, db));
-routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });
-routes.get('/property', (req, res) => { Property.GetAll(req, res, db); });
-routes.put('/property/:id', (req, res) => { Property.Update(req, res, db); });
-routes.post('/property', (req, res) => Property.AddProperty(req, res, db));
-routes.post('/property/info', (req, res) => { Property.Add(req, res, db); });
-routes.delete('/property/:id', (req, res) => { Property.Remove(req, res, db); });
+routes.get('/property/details/:id', (req, res) => PropertyInfo.GetDetails(req, res, db));
+routes.get('/property/:id', (req, res) => { PropertyInfo.Get(req, res, db); });
+routes.get('/property', (req, res) => { PropertyInfo.GetAll(req, res, db); });
+routes.put('/property/:id', (req, res) => { PropertyInfo.Update(req, res, db); });
+routes.post('/property', (req, res) => PropertyInfo.Add(req, res, db));
+routes.post('/property/info', (req, res) => { PropertyInfo.Add(req, res, db); });
+routes.delete('/property/:id', (req, res) => { PropertyInfo.Remove(req, res, db); });
 
 // PropertyDetail requests
 routes.post('/property/details', (req, res) => { PropertyDetails.Add(req, res, db); });
