@@ -46,13 +46,59 @@ const Add = (data, db) => {
       ...photos,
     })
     .then((res) => res)
-    .catch((err) => {
-      console.log(err);
-      Promise.reject(new Error(err));
-    });
+    .catch((err) => Promise.reject(new Error(err)));
+};
+
+const Update = (req, db) => {
+  const { id } = req.params;
+
+  return db('property_photos')
+    .where({ id })
+    .update({
+      ...req.body,
+    })
+    .then((data) => {
+      if (data === 1) {
+        return 'Property updated';
+      } return Promise.reject(new Error('Property not found'));
+    })
+    .catch((err) => Promise.reject(new Error(err)));
+};
+
+const Remove = (req, db) => {
+  const { id } = req.params;
+
+  // Checar por token ou validar autorizacao para apagar usuario
+  // Delete no banco e tabelas relacionadas - CASCADE
+  // Deletar fotos na AWS - AUTOMATIZAR
+  return db('property_photos')
+    .where({ id })
+    .del()
+    .then((data) => {
+      if (data === 1) {
+        return 'Property deleted';
+      } return Promise.reject(Error('Id inexistent'));
+    })
+    .catch((err) => Promise.reject(new Error(err)));
+};
+
+const Get = (req, db) => {
+  const { id } = req.params;
+
+  return db.select('*').from('property_photos').where({ id })
+    .then((item) => {
+      if (item.length) {
+        return item[0];
+      }
+      return Promise.reject(new Error('Property not found'));
+    })
+    .catch((err) => Promise.reject(new Error(err)));
 };
 
 module.exports = {
   signS3,
   Add,
+  Get,
+  Remove,
+  Update,
 };
