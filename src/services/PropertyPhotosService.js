@@ -47,6 +47,7 @@ const Add = (data, db) => {
     })
     .then((res) => res)
     .catch((err) => {
+      console.log(err);
       Promise.reject(new Error(err));
     });
 };

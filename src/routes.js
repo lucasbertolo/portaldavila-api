@@ -23,9 +23,6 @@ routes.put('/user/:id', (req, res) => { User.Update(req, res, db); });
 routes.post('/user', (req, res) => { User.Add(req, res, db); });
 routes.delete('/user/:id', (req, res) => { User.Remove(req, res, db); });
 
-// Property requests
-routes.get('/property/:id', (req, res) => Property.Get(req, res, db));
-
 // PropertyInfo requests
 routes.get('/property/info/:id', (req, res) => { PropertyInfo.Get(req, res, db); });
 routes.put('/property/info/:id', (req, res) => { PropertyInfo.Update(req, res, db); });
@@ -41,6 +38,10 @@ routes.post('/property/features', (req, res) => { PropertyFeatures.Add(req, res,
 // Photos Controller
 routes.post('/sign_s3', (req, res) => { PropertyPhotos.signS3(req, res); });
 routes.post('/property/photos', (req, res) => { PropertyPhotos.Add(req, res, db); });
+
+// Property requests
+routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });
+routes.post('/property', (req, res) => { Property.Add(req, res, db); });
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });

@@ -2,7 +2,6 @@ const PropertyFeatures = require('../model/PropertyFeatures');
 
 const Add = (data, db) => {
   const features = new PropertyFeatures(data);
-
   return db('property_features')
     .insert({
       ...features,

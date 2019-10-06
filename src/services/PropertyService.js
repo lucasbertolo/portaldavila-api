@@ -1,3 +1,10 @@
+/* eslint-disable no-param-reassign */
+const PropertyDetailsService = require('./PropertyDetailsService');
+const PropertyInfoService = require('./PropertyInfoService');
+const PropertyFeaturesService = require('./PropertyFeaturesService');
+const PropertyPhotosService = require('./PropertyPhotosService');
+
+
 const Get = (req, db) => {
   const { id } = req.params;
 
@@ -9,62 +16,34 @@ const Get = (req, db) => {
     .catch((err) => Promise.reject(Error(err)));
 };
 
+const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
+  try {
+    return PropertyInfoService.Add(db, dataInfo)
+      .then((item) => {
+        const id = item[0];
 
-const AddProperty = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
-  const info = new PropertyInfo(dataInfo);
-  const details = new PropertyDetails(dataDetails);
-  const features = new PropertyFeatures(dataFeatures);
-  const photos = new PropertyPhotos(dataPhotos);
+        dataDetails.property_id = id;
+        dataFeatures.property_id = id;
+        dataPhotos.property_id = id;
 
-
-  //   const {
-  //     neighborhood_id,
-  //     position,
-  //     price,
-  //     purpose_id,
-  //     type_id,
-  //     area,
-  //     building_area,
-  //   } = req.body.data.info;
-
-  //   const { creator_id } = req.body;
-
-  // console.log(creator_id);
-
-  db('property').insert({
-    neighborhood_id,
-    position,
-    price,
-    area,
-    building_area,
-    purpose_id,
-    type_id,
-    creator_id,
-  }).then((resp) => {
-    const id = resp[0];
-
-    return db('property_details').insert({
-      ...req.body.data.details,
-      property_id: id,
-    }).then(() => {
-      db('property_features').insert({
-        ...req.body.data.features,
-        property_id: id,
+        PropertyDetailsService.Add(dataDetails, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
+        PropertyFeaturesService.Add(dataFeatures, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
+        PropertyPhotosService.Add(dataPhotos, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
       })
-        .then()
-        .catch((err) => console.log(err));
-    })
-      .then()
-      .catch((err) => console.log(err));
-  })
-    .then(() => {
-      res.status(200).json('Property registerd');
-    })
-    .catch((err) => {
-      res.status(400).json(`Error while registering - ${err}`);
-    });
+      .catch((err) => Promise.reject(Error(err)));
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
 };
 
 module.exports = {
   Get,
+  Add,
 };
