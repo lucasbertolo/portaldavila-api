@@ -11,16 +11,16 @@ const Add = (data, db) => {
     .catch((err) => Promise.reject(Error(err)));
 };
 
-const Update = (req, db) => {
+const Update = (req, data, db) => {
   const { id } = req.params;
 
   return db('property_details')
     .where({ id })
     .update({
-      ...req.body,
+      ...data,
     })
-    .then((data) => {
-      if (data === 1) {
+    .then((item) => {
+      if (item === 1) {
         return 'Property updated';
       } return Promise.reject(new Error('Property not found'));
     })
@@ -36,8 +36,8 @@ const Remove = (req, db) => {
   return db('property_details')
     .where({ id })
     .del()
-    .then((data) => {
-      if (data === 1) {
+    .then((item) => {
+      if (item === 1) {
         return 'Property deleted';
       } return Promise.reject(Error('Id inexistent'));
     })

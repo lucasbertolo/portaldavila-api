@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 const PropertyDetailsService = require('./PropertyDetailsService');
 const PropertyInfoService = require('./PropertyInfoService');
@@ -18,7 +19,7 @@ const Get = (req, db) => {
 
 const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
   try {
-    return PropertyInfoService.Add(db, dataInfo)
+    return PropertyInfoService.Add(dataInfo, db)
       .then((item) => {
         const id = item[0];
 
@@ -43,7 +44,29 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
   }
 };
 
+const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
+  try {
+    return PropertyInfoService.Update(req, dataInfo, db)
+      .then(() => {
+        PropertyDetailsService.Update(req, dataDetails, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
+        PropertyFeaturesService.Update(req, dataFeatures, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
+        PropertyPhotosService.Update(req, dataPhotos, db)
+          .then()
+          .catch((err) => Promise.reject(Error(err)));
+      })
+      .catch((err) => Promise.reject(Error(err)));
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
+};
+
 module.exports = {
   Get,
   Add,
+  Update,
 };

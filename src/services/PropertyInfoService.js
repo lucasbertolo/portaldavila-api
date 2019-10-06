@@ -1,6 +1,6 @@
 const PropertyInfo = require('../model/PropertyInfo');
 
-const Add = (db, data) => {
+const Add = (data, db) => {
   const info = new PropertyInfo(data);
 
   return db('property')
@@ -26,16 +26,16 @@ const Get = (req, db) => {
     .catch((err) => Promise.reject(new Error(err)));
 };
 
-const Update = (req, db) => {
+const Update = (req, data, db) => {
   const { id } = req.params;
 
   return db('property')
     .where({ id })
     .update({
-      ...req.body,
+      ...data,
     })
-    .then((data) => {
-      if (data === 1) {
+    .then((item) => {
+      if (item === 1) {
         return 'Property updated';
       } return Promise.reject(new Error('Property not found'));
     })

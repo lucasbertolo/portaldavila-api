@@ -26,7 +26,7 @@ const Remove = (req, res, db) => {
 const Get = (req, res, db) => {
   PropertyFeaturesService.Get(req, db)
     .then((resp) => {
-      if (resp.length > 0) {
+      if (resp) {
         res.json(resp);
       } else {
         res.status(404).json('Property not found');

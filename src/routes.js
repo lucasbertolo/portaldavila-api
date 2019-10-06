@@ -41,7 +41,9 @@ routes.post('/property/photos', (req, res) => { PropertyPhotos.Add(req, res, db)
 
 // Property requests
 routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });
+routes.put('/property/:id', (req, res) => { Property.Update(req, res, db); });
 routes.post('/property', (req, res) => { Property.Add(req, res, db); });
+
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });

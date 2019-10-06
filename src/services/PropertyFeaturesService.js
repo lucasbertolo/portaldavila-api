@@ -10,16 +10,16 @@ const Add = (data, db) => {
     .catch((err) => Promise.reject(Error(err)));
 };
 
-const Update = (req, db) => {
+const Update = (req, data, db) => {
   const { id } = req.params;
 
   return db('property_features')
     .where({ id })
     .update({
-      ...req.body,
+      ...data,
     })
-    .then((data) => {
-      if (data === 1) {
+    .then((item) => {
+      if (item === 1) {
         return 'Property updated';
       } return Promise.reject(new Error('Property not found'));
     })
