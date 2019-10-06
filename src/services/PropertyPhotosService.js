@@ -24,17 +24,19 @@ const signS3 = (req) => {
     ACL: 'public-read',
   };
 
-  s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    if (err) {
-      return ({ success: false, error: err });
-    }
+  return new Promise((resolve, reject) => {
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if (err) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject({ success: false, error: err });
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
+      };
 
-    const returnData = {
-      signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
-    };
-
-    return ({ success: true, data: { returnData } });
+      resolve({ success: true, data: { returnData } });
+    });
   });
 };
 

@@ -2,7 +2,9 @@ const PropertyPhotosService = require('../services/PropertyPhotosService');
 
 const signS3 = (req, res) => {
   PropertyPhotosService.signS3(req, res)
-    .then((item) => res.json(item))
+    .then((item) => {
+      res.json(item.data);
+    })
     .catch((err) => res.status(400).json(`${err}`));
 };
 
