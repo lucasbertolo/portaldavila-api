@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 const aws = require('aws-sdk');
+const PropertyPhotos = require('../model/PropertyPhotos');
 
 require('dotenv').config();
 
@@ -11,7 +11,7 @@ aws.config.update({
 
 const S3_BUCKET = process.env.bucket;
 
-exports.sign_s3 = (req, res) => {
+const signS3 = (req) => {
   const s3 = new aws.S3();
   const { fileName } = req.body;
   const { fileType } = req.body;
@@ -26,14 +26,32 @@ exports.sign_s3 = (req, res) => {
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
-      console.log(err);
-      res.json({ success: false, error: err });
+      return ({ success: false, error: err });
     }
 
     const returnData = {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
     };
-    res.json({ success: true, data: { returnData } });
+
+    return ({ success: true, data: { returnData } });
   });
+};
+
+const Add = (data, db) => {
+  const photos = new PropertyPhotos(data);
+
+  return db('property_photos')
+    .insert({
+      ...photos,
+    })
+    .then((res) => res)
+    .catch((err) => {
+      Promise.reject(new Error(err));
+    });
+};
+
+module.exports = {
+  signS3,
+  Add,
 };

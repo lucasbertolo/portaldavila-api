@@ -7,12 +7,14 @@ const User = require('./controllers/UserController');
 
 const Neighborhood = require('./controllers/NeighborhoodController');
 
+const Property = require('./controllers/PropertyController');
+
 const PropertyInfo = require('./controllers/PropertyInfoController');
 const PropertyType = require('./controllers/PropertyTypeController');
 const PropertyDetails = require('./controllers/PropertyDetailsController');
 const PropertyFeatures = require('./controllers/PropertyFeaturesController');
 
-const PhotosController = require('./controllers/PhotosController');
+const PropertyPhotos = require('./controllers/PropertyPhotosController');
 
 
 // User requests
@@ -22,13 +24,13 @@ routes.post('/user', (req, res) => { User.Add(req, res, db); });
 routes.delete('/user/:id', (req, res) => { User.Remove(req, res, db); });
 
 // Property requests
-routes.get('/property/details/:id', (req, res) => PropertyInfo.GetDetails(req, res, db));
-routes.get('/property/:id', (req, res) => { PropertyInfo.Get(req, res, db); });
-routes.get('/property', (req, res) => { PropertyInfo.GetAll(req, res, db); });
-routes.put('/property/:id', (req, res) => { PropertyInfo.Update(req, res, db); });
-routes.post('/property', (req, res) => PropertyInfo.Add(req, res, db));
+routes.get('/property/:id', (req, res) => Property.Get(req, res, db));
+
+// PropertyInfo requests
+routes.get('/property/info/:id', (req, res) => { PropertyInfo.Get(req, res, db); });
+routes.put('/property/info/:id', (req, res) => { PropertyInfo.Update(req, res, db); });
 routes.post('/property/info', (req, res) => { PropertyInfo.Add(req, res, db); });
-routes.delete('/property/:id', (req, res) => { PropertyInfo.Remove(req, res, db); });
+routes.delete('/property/info/:id', (req, res) => { PropertyInfo.Remove(req, res, db); });
 
 // PropertyDetail requests
 routes.post('/property/details', (req, res) => { PropertyDetails.Add(req, res, db); });
@@ -37,7 +39,8 @@ routes.post('/property/details', (req, res) => { PropertyDetails.Add(req, res, d
 routes.post('/property/features', (req, res) => { PropertyFeatures.Add(req, res, db); });
 
 // Photos Controller
-routes.post('/sign_s3', (req, res) => { PhotosController.sign_s3(req, res); });
+routes.post('/sign_s3', (req, res) => { PropertyPhotos.signS3(req, res); });
+routes.post('/property/photos', (req, res) => { PropertyPhotos.Add(req, res, db); });
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });

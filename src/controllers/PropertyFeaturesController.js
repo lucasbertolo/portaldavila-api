@@ -1,12 +1,11 @@
+const PropertyFeaturesService = require('../services/PropertyFeaturesService');
+
 const Add = (req, res, db) => {
   const data = req.body;
 
-  db('property_features')
-    .insert({
-      ...data.state,
-    })
-    .then(() => res.status(200).json('Features registered'))
-    .catch((err) => res.status(400).json(`Error - ${err}`));
+  PropertyFeaturesService.Add(data, db)
+    .then((item) => res.status(200).json(item))
+    .catch((err) => res.status(400).json(`${err}`));
 };
 
 module.exports = {
