@@ -29,10 +29,11 @@ const Get = (req, db) => {
 const Update = (req, data, db) => {
   const { id } = req.params;
 
+  const info = new PropertyInfo(data);
   return db('property')
     .where({ id })
     .update({
-      ...data,
+      ...info,
     })
     .then((item) => {
       if (item === 1) {

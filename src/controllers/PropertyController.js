@@ -27,10 +27,10 @@ const Add = (req, res, db) => {
 };
 
 const Update = (req, res, db) => {
-  const dataInfo = req.body.info;
-  const dataDetails = req.body.details;
-  const dataFeatures = req.body.features;
-  const dataPhotos = req.body.photos;
+  const dataInfo = req.body.data.info;
+  const dataDetails = req.body.data.details;
+  const dataFeatures = req.body.data.features;
+  const dataPhotos = req.body.data.images;
 
   PropertyService.Update(dataInfo, dataDetails, dataFeatures, dataPhotos, db, req)
     .then(() => res.status(200).json('Success'))

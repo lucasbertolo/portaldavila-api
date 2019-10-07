@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const PropertyDetails = require('../model/PropertyDetails');
 
 const Add = (data, db) => {
@@ -13,11 +14,15 @@ const Add = (data, db) => {
 
 const Update = (req, data, db) => {
   const { id } = req.params;
+  const property_id = id;
+
+  const details = new PropertyDetails(data);
+  details.property_id = property_id;
 
   return db('property_details')
-    .where({ id })
+    .where({ property_id })
     .update({
-      ...data,
+      ...details,
     })
     .then((item) => {
       if (item === 1) {
