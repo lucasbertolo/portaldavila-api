@@ -47,7 +47,6 @@ const Add = (data, db, id) => {
     return item;
   });
 
-
   const photos = [];
   if (Array.isArray(list) && list.length) {
     // eslint-disable-next-line array-callback-return
@@ -63,19 +62,33 @@ const Add = (data, db, id) => {
 };
 
 const Update = (req, data, db) => {
-  const { id } = req.params;
+  // eslint-disable-next-line camelcase
+  const property_id = req.params.id;
 
-  return db('property_photos')
-    .where({ id })
-    .update({
-      ...data,
-    })
-    .then((item) => {
-      if (item === 1) {
-        return 'Property updated';
-      } return Promise.reject(new Error('Property not found'));
-    })
-    .catch((err) => Promise.reject(new Error(err)));
+  // eslint-disable-next-line array-callback-return
+  data.map((item) => {
+    const { id } = item;
+    const newphotos = [];
+
+    if (id !== undefined) {
+      db('property_photos')
+        .where({ id })
+        .update({
+          ...item,
+        })
+        .then((x) => {
+          if (x === 1) {
+            return 'Property updated';
+          } return Promise.reject(new Error('Property not found'));
+        })
+        .catch((err) => Promise.reject(new Error(err)));
+    } else {
+      newphotos.push(item);
+      Add(newphotos, db, property_id);
+    }
+  });
+
+  return Promise.resolve();
 };
 
 const Remove = (req, db) => {
@@ -101,7 +114,7 @@ const Get = (req, db) => {
   // eslint-disable-next-line camelcase
   const property_id = id;
 
-  return db.select(['url', 'alt']).from('property_photos').where({ property_id })
+  return db.select(['url', 'alt', 'id']).from('property_photos').where({ property_id })
     .then((item) => {
       if (item) {
         return item;

@@ -48,30 +48,35 @@ const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
     if (dataDetails !== undefined) {
       PropertyInfoService.Update(req, dataInfo, db)
         .then()
-        .catch((err) => Promise.reject(Error(err)));
+        .catch((err) => {
+          Promise.reject(Error(err));
+        });
     }
 
     if (dataDetails !== undefined) {
       PropertyDetailsService.Update(req, dataDetails, db)
         .then()
-        .catch((err) => Promise.reject(Error(err)));
+        .catch((err) => {
+          Promise.reject(Error(err));
+        });
     }
 
     if (dataFeatures !== undefined) {
       PropertyFeaturesService.Update(req, dataFeatures, db)
         .then()
+        .catch((err) => {
+          Promise.reject(Error(err));
+        });
+    }
+    if (dataPhotos !== undefined) {
+      PropertyPhotosService.Update(req, dataPhotos, db)
+        .then()
         .catch((err) => Promise.reject(Error(err)));
     }
-    // if (dataPhotos !== undefined) {
-    //   PropertyPhotosService.Update(req, dataPhotos, db)
-    //     .then()
-    //     .catch((err) => Promise.reject(Error(err)));
-    // }
 
     return Promise.resolve();
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(err);
     Promise.reject(Error(err));
   }
 };

@@ -14,6 +14,7 @@ const Add = (data, db) => {
 const Update = (req, data, db) => {
   const { id } = req.params;
   const property_id = id;
+
   const features = new PropertyFeatures(data);
   features.property_id = property_id;
 

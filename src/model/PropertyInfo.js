@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 function PropertyInfo(data) {
-//   console.log('data', data);
   this.neighborhood_id = data.neighborhood_id || 0;
   this.position = data.position;
   this.price = data.price || 0;
