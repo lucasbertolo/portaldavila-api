@@ -25,7 +25,6 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
 
         dataDetails.property_id = id;
         dataFeatures.property_id = id;
-        dataPhotos.property_id = id;
 
         PropertyDetailsService.Add(dataDetails, db)
           .then()
@@ -33,7 +32,7 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
         PropertyFeaturesService.Add(dataFeatures, db)
           .then()
           .catch((err) => Promise.reject(Error(err)));
-        PropertyPhotosService.Add(dataPhotos, db)
+        PropertyPhotosService.Add(dataPhotos, db, id)
           .then()
           .catch((err) => Promise.reject(Error(err)));
       })

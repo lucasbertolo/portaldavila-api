@@ -38,6 +38,7 @@ routes.post('/property/features', (req, res) => { PropertyFeatures.Add(req, res,
 // Photos Controller
 routes.post('/sign_s3', (req, res) => { PropertyPhotos.signS3(req, res); });
 routes.post('/property/photos', (req, res) => { PropertyPhotos.Add(req, res, db); });
+routes.get('/property/photos/:id', (req, res) => { PropertyPhotos.Get(req, res, db); });
 
 // Property requests
 routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });

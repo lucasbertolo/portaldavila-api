@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 function PropertyDetails(data) {
   this.property_id = data.property_id;
-  this.url = data.url;
+  this.url = data.src;
   this.alt = data.alt;
 
   return (

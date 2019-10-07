@@ -40,13 +40,24 @@ const signS3 = (req) => {
   });
 };
 
-const Add = (data, db) => {
-  const photos = new PropertyPhotos(data);
+const Add = (data, db, id) => {
+  const list = data.map((x) => {
+    const item = { ...x };
+    item.property_id = id;
+    return item;
+  });
+
+
+  const photos = [];
+  if (Array.isArray(list) && list.length) {
+    // eslint-disable-next-line array-callback-return
+    list.map((item) => {
+      photos.push(new PropertyPhotos(item));
+    });
+  }
 
   return db('property_photos')
-    .insert({
-      ...photos,
-    })
+    .insert(photos)
     .then((res) => res)
     .catch((err) => Promise.reject(new Error(err)));
 };
@@ -87,10 +98,13 @@ const Remove = (req, db) => {
 const Get = (req, db) => {
   const { id } = req.params;
 
-  return db.select('*').from('property_photos').where({ id })
+  // eslint-disable-next-line camelcase
+  const property_id = id;
+
+  return db.select(['url', 'alt']).from('property_photos').where({ property_id })
     .then((item) => {
-      if (item.length) {
-        return item[0];
+      if (item) {
+        return item;
       }
       return Promise.reject(new Error('Property not found'));
     })
