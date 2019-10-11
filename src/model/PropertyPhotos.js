@@ -7,7 +7,8 @@ function PropertyDetails(data) {
   return (
     this.property_id,
     this.url,
-    this.alt
+    this.alt,
+    this.active
   );
 }
 

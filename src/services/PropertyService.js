@@ -33,13 +33,17 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
           .then()
           .catch((err) => Promise.reject(Error(err)));
         PropertyPhotosService.Add(dataPhotos, db, id)
-          .then()
+          .then((res) => {
+            if (res) { Promise.resolve(); }
+            return null;
+          })
           .catch((err) => Promise.reject(Error(err)));
       })
-      .catch((err) => Promise.reject(Error(err)));
+      .then((res) => { if (!res) Promise.reject(Error('teste')); })
+      .catch((err) => Promise.reject(Error('abc')));
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(err);
+    Promise.reject(Error('cde'));
   }
 };
 

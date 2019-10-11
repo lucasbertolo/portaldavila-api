@@ -57,7 +57,29 @@ const Add = (data, db, id) => {
 
   return db('property_photos')
     .insert(photos)
-    .then((res) => res)
+    .then((res) => {
+      data.map((item) => {
+        if (item.active === true) {
+          try {
+            db('cover_photos')
+              .insert({
+                property_id: id,
+                photo_id: res,
+              })
+              .then(() => { Promise.resolve(); })
+              .catch((err) => {
+                Promise.reject(Error(err));
+              });
+          } catch (err) {
+            Promise.reject(Error(err));
+          }
+        } return null;
+      });
+    })
+    .then((res) => {
+      if (!res) return Promise.reject(new Error('Cover photo inexistent'));
+      return null;
+    })
     .catch((err) => Promise.reject(new Error(err)));
 };
 
