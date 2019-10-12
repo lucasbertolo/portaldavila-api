@@ -3,7 +3,9 @@ const PropertyDetailsService = require('../services/PropertyDetailsService');
 const Add = (req, res, db) => {
   const data = req.body;
 
-  PropertyDetailsService.Add(data, db)
+  const { id } = req.params;
+
+  PropertyDetailsService.Add(data, db, id)
     .then(() => res.status(200).json('Success'))
     .catch((err) => res.status(400).json(`${err}`));
 };

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-function PropertyFeatures(data) {
+function PropertyFeatures(data, id) {
   this.description = data.description;
   this.air_conditioning = data.air_conditioning || 0;
   this.pool = data.pool || 0;
@@ -7,7 +7,7 @@ function PropertyFeatures(data) {
   this.barbecue_grill = data.barbecue_grill || 0;
   this.stairway = data.stairway || 0;
   this.garden = data.garden || 0;
-  this.property_id = data.property_id || 0;
+  this.property_id = id || 0;
 
   return (
     this.description,

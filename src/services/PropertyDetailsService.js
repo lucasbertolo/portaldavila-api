@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 const PropertyDetails = require('../model/PropertyDetails');
 
-const Add = (data, db) => {
-  const details = new PropertyDetails(data);
+const Add = (data, db, id) => {
+  const details = new PropertyDetails(data, id);
 
   return db('property_details')
     .insert({

@@ -22,7 +22,9 @@ const Add = (req, res, db) => {
   const dataPhotos = req.body.data.images;
 
   PropertyService.Add(dataInfo, dataDetails, dataFeatures, dataPhotos, db)
-    .then(() => res.status(200).json('Success'))
+    .then((item) => {
+      if (item) { res.status(200).json('Success'); }
+    })
     .catch((err) => res.status(400).json(`${err}`));
 };
 

@@ -18,33 +18,33 @@ const Get = (req, db) => {
 };
 
 const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
-  try {
-    return PropertyInfoService.Add(dataInfo, db)
+  let id;
+  const messages = [];
+
+  return new Promise((resolve, reject) => {
+    PropertyInfoService.Add(dataInfo, db)
       .then((item) => {
-        const id = item[0];
-
-        dataDetails.property_id = id;
-        dataFeatures.property_id = id;
-
-        PropertyDetailsService.Add(dataDetails, db)
-          .then()
-          .catch((err) => Promise.reject(Error(err)));
-        PropertyFeaturesService.Add(dataFeatures, db)
-          .then()
-          .catch((err) => Promise.reject(Error(err)));
-        PropertyPhotosService.Add(dataPhotos, db, id)
-          .then((res) => {
-            if (res) { Promise.resolve(); }
-            return null;
-          })
-          .catch((err) => Promise.reject(Error(err)));
+      // eslint-disable-next-line prefer-destructuring
+        id = item[0];
       })
-      .then((res) => { if (!res) Promise.reject(Error('teste')); })
-      .catch((err) => Promise.reject(Error('abc')));
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    Promise.reject(Error('cde'));
-  }
+      .catch((err) => messages.push(err))
+
+      .then(() => PropertyDetailsService.Add(dataDetails, db, id))
+      .catch((err) => messages.push(err))
+
+      .then(() => PropertyFeaturesService.Add(dataFeatures, db, id))
+      .catch((err) => messages.push(err))
+
+      .then(() => PropertyPhotosService.Add(dataPhotos, db, id))
+      .catch((err) => messages.push(err))
+
+      .then(() => {
+        if (messages.length > 0) {
+          return reject(Error(messages));
+        }
+        return resolve('success');
+      });
+  });
 };
 
 const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {

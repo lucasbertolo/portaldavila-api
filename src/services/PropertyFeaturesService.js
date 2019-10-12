@@ -1,14 +1,16 @@
 /* eslint-disable camelcase */
 const PropertyFeatures = require('../model/PropertyFeatures');
 
-const Add = (data, db) => {
-  const features = new PropertyFeatures(data);
-  return db('property_features')
-    .insert({
-      ...features,
-    })
-    .then(() => 'Features registered')
-    .catch((err) => Promise.reject(Error(err)));
+const Add = (data, db, id) => {
+  const features = new PropertyFeatures(data, id);
+  return new Promise((resolve, reject) => {
+    db('property_features')
+      .insert({
+        ...features,
+      })
+      .then(() => resolve('Features registered'))
+      .catch((err) => reject(Error(err)));
+  });
 };
 
 const Update = (req, data, db) => {
@@ -18,17 +20,15 @@ const Update = (req, data, db) => {
   const features = new PropertyFeatures(data);
   features.property_id = property_id;
 
-  return db('property_features')
-    .where({ property_id })
-    .update({
-      ...features,
-    })
-    .then((item) => {
-      if (item === 1) {
-        return 'Property updated';
-      } return Promise.reject(new Error('Property not found'));
-    })
-    .catch((err) => Promise.reject(new Error(err)));
+  return new Promise((resolve, reject) => {
+    db('property_features')
+      .where({ property_id })
+      .update({
+        ...features,
+      })
+      .then(() => resolve('success'))
+      .catch((err) => reject(Error(err)));
+  });
 };
 
 const Remove = (req, db) => {

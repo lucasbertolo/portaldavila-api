@@ -2,15 +2,14 @@ const PropertyInfo = require('../model/PropertyInfo');
 
 const Add = (data, db) => {
   const info = new PropertyInfo(data);
-
-  return db('property')
-    .insert({
-      ...info,
-    })
-    .then((res) => res)
-    .catch((err) => {
-      Promise.reject(new Error(err));
-    });
+  return new Promise((resolve, reject) => {
+    db('property')
+      .insert({
+        ...info,
+      })
+      .then((res) => resolve(res))
+      .catch((err) => reject(Error(err)));
+  });
 };
 
 const Get = (req, db) => {

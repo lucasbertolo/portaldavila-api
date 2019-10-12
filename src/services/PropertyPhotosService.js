@@ -27,8 +27,7 @@ const signS3 = (req) => {
   return new Promise((resolve, reject) => {
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if (err) {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject({ success: false, error: err });
+        reject(Error({ success: false, error: err }));
       }
       const returnData = {
         signedRequest: data,
@@ -55,32 +54,26 @@ const Add = (data, db, id) => {
     });
   }
 
-  return db('property_photos')
-    .insert(photos)
-    .then((res) => {
-      data.map((item) => {
-        if (item.active === true) {
-          try {
-            db('cover_photos')
+  return new Promise((resolve, reject) => {
+    db('property_photos')
+      .insert(photos)
+      .then((res) => {
+        data.map((item) => {
+          if (item.active === true) {
+            return db('cover_photos')
               .insert({
                 property_id: id,
                 photo_id: res,
               })
-              .then(() => { Promise.resolve(); })
-              .catch((err) => {
-                Promise.reject(Error(err));
-              });
-          } catch (err) {
-            Promise.reject(Error(err));
-          }
-        } return null;
-      });
-    })
-    .then((res) => {
-      if (!res) return Promise.reject(new Error('Cover photo inexistent'));
-      return null;
-    })
-    .catch((err) => Promise.reject(new Error(err)));
+              .then()
+              .catch((err) => reject(Error(err)));
+          } return null;
+        });
+      })
+      .catch((err) => reject(Error(err)));
+
+    resolve('success');
+  });
 };
 
 const Update = (req, data, db) => {

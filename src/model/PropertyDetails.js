@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-function PropertyDetails(data) {
-  this.property_id = data.property_id;
+function PropertyDetails(data, id) {
+  this.property_id = id;
   this.room = data.room;
   this.dormitory = data.dormitory;
   this.garage = data.garage;
