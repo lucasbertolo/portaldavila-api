@@ -39,6 +39,7 @@ routes.post('/property/features', (req, res) => { PropertyFeatures.Add(req, res,
 routes.post('/sign_s3', (req, res) => { PropertyPhotos.signS3(req, res); });
 routes.post('/property/photos', (req, res) => { PropertyPhotos.Add(req, res, db); });
 routes.get('/property/photos/:id', (req, res) => { PropertyPhotos.Get(req, res, db); });
+routes.delete('/property/photos/:id', (req, res) => { PropertyPhotos.Remove(req, res, db); });
 
 // Property requests
 routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });

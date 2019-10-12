@@ -84,12 +84,12 @@ const Update = (req, data, db) => {
   data.map((item) => {
     const { id } = item;
     const newphotos = [];
-
+    const photo = new PropertyPhotos(item);
     if (id !== undefined) {
       db('property_photos')
         .where({ id })
         .update({
-          ...item,
+          ...photo,
         })
         .then((x) => {
           if (x === 1) {
