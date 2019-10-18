@@ -17,6 +17,14 @@ const Get = (req, db) => {
     .catch((err) => Promise.reject(Error(err)));
 };
 
+const GetAll = (req, db) => db.select('*').from('property')
+  .join('property_details', 'property.id', 'property_details.property_id')
+  .join('cover_photos', 'property.id', 'cover_photos.property_id')
+  .join('property_photos', 'cover_photos.photo_id', 'property_photos.id')
+  .then((data) => data)
+  .catch((err) => Promise.reject(Error(err)));
+
+
 const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
   let id;
   const messages = [];
@@ -89,4 +97,5 @@ module.exports = {
   Get,
   Add,
   Update,
+  GetAll,
 };

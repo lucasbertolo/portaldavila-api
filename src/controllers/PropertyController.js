@@ -14,6 +14,17 @@ const Get = (req, res, db) => {
     .catch((err) => res.status(400).json(`${err}`));
 };
 
+const GetAll = (req, res, db) => {
+  PropertyService.GetAll(req, db)
+    .then((item) => {
+      if (item) {
+        res.status(200).json(item);
+      } else {
+        res.status(404).json('No availables properties');
+      }
+    })
+    .catch((err) => res.status(400).json(`${err}`));
+};
 
 const Add = (req, res, db) => {
   const dataInfo = req.body.data.info;
@@ -38,8 +49,10 @@ const Update = (req, res, db) => {
     .then(() => res.status(200).json('Success'))
     .catch((err) => res.status(400).json(`${err}`));
 };
+
 module.exports = {
   Get,
   Add,
   Update,
+  GetAll,
 };

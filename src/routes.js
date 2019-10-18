@@ -44,6 +44,7 @@ routes.delete('/property/photos/:id', (req, res) => { PropertyPhotos.Remove(req,
 // Property requests
 routes.get('/property/:id', (req, res) => { Property.Get(req, res, db); });
 routes.put('/property/:id', (req, res) => { Property.Update(req, res, db); });
+routes.get('/property', (req, res) => { Property.GetAll(req, res, db); });
 routes.post('/property', (req, res) => { Property.Add(req, res, db); });
 
 
