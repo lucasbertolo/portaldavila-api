@@ -57,19 +57,7 @@ const Add = (data, db, id) => {
   return new Promise((resolve, reject) => {
     db('property_photos')
       .insert(photos)
-      .then((res) => {
-        data.map((item) => {
-          if (item.active === true) {
-            return db('cover_photos')
-              .insert({
-                property_id: id,
-                photo_id: res,
-              })
-              .then()
-              .catch((err) => reject(Error(err)));
-          } return null;
-        });
-      })
+      .then()
       .catch((err) => reject(Error(err)));
 
     resolve('success');
@@ -91,11 +79,7 @@ const Update = (req, data, db) => {
         .update({
           ...photo,
         })
-        .then((x) => {
-          if (x === 1) {
-            return 'Property updated';
-          } return Promise.reject(new Error('Property not found'));
-        })
+        .then()
         .catch((err) => Promise.reject(new Error(err)));
     } else {
       newphotos.push(item);
@@ -129,7 +113,7 @@ const Get = (req, db) => {
   // eslint-disable-next-line camelcase
   const property_id = id;
 
-  return db.select(['url', 'alt', 'id']).from('property_photos').where({ property_id })
+  return db.select(['url', 'alt', 'id', 'isCover']).from('property_photos').where({ property_id })
     .then((item) => {
       if (item) {
         return item;

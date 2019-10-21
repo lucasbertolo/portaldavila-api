@@ -19,8 +19,8 @@ const Get = (req, db) => {
 
 const GetAll = (req, db) => db.select('*').from('property')
   .join('property_details', 'property.id', 'property_details.property_id')
-  .join('cover_photos', 'property.id', 'cover_photos.property_id')
-  .join('property_photos', 'cover_photos.photo_id', 'property_photos.id')
+  .join('property_photos', 'property.id', 'property_photos.property_id')
+  .where('property_photos.isCover', '=', true)
   .then((data) => data)
   .catch((err) => Promise.reject(Error(err)));
 
