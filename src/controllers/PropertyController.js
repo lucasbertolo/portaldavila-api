@@ -17,7 +17,7 @@ const Get = (req, res, db) => {
 const GetAll = (req, res, db) => {
   PropertyService.GetAll(req, db)
     .then((item) => {
-      if (item) {
+      if (item.length > 0) {
         res.status(200).json(item);
       } else {
         res.status(404).json('No availables properties');
