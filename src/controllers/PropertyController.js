@@ -50,9 +50,16 @@ const Update = (req, res, db) => {
     .catch((err) => res.status(400).json(`${err}`));
 };
 
+const Remove = (req, res, db) => {
+  PropertyService.Remove(req, res, db)
+    .then(() => res.status(200).json('Success'))
+    .catch((err) => res.status(400).json(`${err}`));
+};
+
 module.exports = {
   Get,
   Add,
   Update,
   GetAll,
+  Remove,
 };

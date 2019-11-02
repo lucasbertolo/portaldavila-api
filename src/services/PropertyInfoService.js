@@ -56,12 +56,21 @@ const Remove = (req, db) => {
         return 'Property deleted';
       } return Promise.reject(Error('Id inexistent'));
     })
-    .catch((err) => Promise.reject(new Error(err)));
+    .catch((err) => Promise.reject(Error(err)));
 };
+
+const setVisibility = (db, id, status) => db('property')
+  .where({ id })
+  .update({
+    isVisible: status,
+  })
+  .then(() => Promise.resolve('Visibility updated'))
+  .catch((err) => Promise.reject(Error(err)));
 
 module.exports = {
   Add,
   Get,
   Update,
   Remove,
+  setVisibility,
 };

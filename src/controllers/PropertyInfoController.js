@@ -36,7 +36,14 @@ const Remove = (req, res, db) => {
   // Delete no banco e tabelas relacionadas - CASCADE
   // Deletar fotos na AWS - AUTOMATIZAR
   PropertyInfoService.Remove(req, db)
-    .then((item) => res.status(200).json(item))
+    .then(() => res.status(200).json('Deleted'))
+    .catch((err) => res.status(400).json(`${err}`));
+};
+
+const setVisibility = (req, res, db) => {
+  const { id, status } = req.params;
+  PropertyInfoService.setVisibility(db, id, status)
+    .then(() => res.status(200).json('Updated'))
     .catch((err) => res.status(400).json(`${err}`));
 };
 
@@ -46,4 +53,5 @@ module.exports = {
   Add,
   Update,
   Remove,
+  setVisibility,
 };

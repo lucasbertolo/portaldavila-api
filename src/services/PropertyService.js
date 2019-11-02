@@ -93,9 +93,19 @@ const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
   }
 };
 
+const Remove = (req, res, db) => {
+  // Checar por token ou validar autorizacao para apagar usuario
+  // Delete no banco e tabelas relacionadas - CASCADE
+  // Deletar fotos na AWS - AUTOMATIZAR
+  PropertyInfoService.Remove(req, db)
+    .then(() => Promise.resolve('Property deleted'))
+    .catch((err) => Promise.reject(Error(err)));
+};
+
 module.exports = {
   Get,
   Add,
   Update,
   GetAll,
+  Remove,
 };
