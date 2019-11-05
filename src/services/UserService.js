@@ -1,6 +1,5 @@
 
 // Retorno de usuarios filtrando por id
-const UserService = require('../services/UserService');
 
 const Get = (req, res, db) => {
   const { id } = req.params;
@@ -16,28 +15,26 @@ const Get = (req, res, db) => {
     .catch((err) => res.status(400).json(`error getting user - ${err}`));
 };
 
-// Cadastro de novo usuario
+const CheckUsername = (db, login) => db.select('login').from('user').where({ login })
+  .then((usr) => {
+    if (usr.length) {
+      Promise.resolve({ hasEntry: true });
+    }
+  })
+  .catch((err) => Promise.reject(Error(err)));
 
-const Add = (req, res, db) => {
-  const {
-    password,
-    login,
-  } = req.body;
+const Add = (db, data) => {
+  const { password, login } = data;
+  const type_id = 2;
 
-  const data = {
-    password, login,
-  };
-
-  UserService.CheckUsername(db, login)
-    .then((item) => {
-      console.log(item);
-      // if (item.hasEntry) res.status(500).json('Email já cadastrado');
+  return db('user')
+    .insert({
+      pass: password,
+      login,
+      type_id,
     })
-    .catch(() => res.status(500).json('Erro interno, tente novamente mais tarde'));
-
-  UserService.Add(db, data)
-    .then(() => res.status(200).json('Register sucessful'))
-    .catch((err) => res.status(400).json(`${err}`));
+    .then(() => Promise.resolve('success'))
+    .catch((err) => Promise.reject(Error(`Error while registering new user - ${err}`)));
 };
 
 // Atualização de usuario
@@ -89,4 +86,5 @@ module.exports = {
   Update,
   Add,
   Remove,
+  CheckUsername,
 };
