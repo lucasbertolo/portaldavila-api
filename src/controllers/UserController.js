@@ -1,43 +1,40 @@
 
 // Retorno de usuarios filtrando por id
 const UserService = require('../services/UserService');
+const User = require('../model/User');
 
 const Get = (req, res, db) => {
-  const { id } = req.params;
+  const { username, password } = req.body;
+  console.log(req.body);
+  UserService.Get(db, username, password)
+    .then((item) => {
+      if (item) { return res.status(200).json(item); }
 
-  db.select('*').from('user').where({ id })
-    .then((usr) => {
-      if (usr.length) {
-        res.json(usr[0]);
-      } else {
-        res.status(400).json('User not found');
-      }
+      return res.status(200).json('User not found');
     })
-    .catch((err) => res.status(400).json(`error getting user - ${err}`));
+    .catch(() => res.status(400).json('Internal Error'));
 };
 
 // Cadastro de novo usuario
 
 const Add = (req, res, db) => {
-  const {
-    password,
-    login,
-  } = req.body;
-
-  const data = {
-    password, login,
-  };
-
-  UserService.CheckUsername(db, login)
-    .then((item) => {
-      console.log(item);
-      // if (item.hasEntry) res.status(500).json('Email já cadastrado');
+  const data = new User(req.body);
+  let isValid = true;
+  UserService.GetAll(db)
+    .then((usr) => {
+      const hasEntry = usr.filter((x) => x.username === data.username);
+      if (hasEntry.length > 0) {
+        res.status(200).json({ msg: 'user already existent' });
+        isValid = false;
+      }
+    }).then(() => {
+      if (isValid) {
+        UserService.Add(db, data)
+          .then(() => res.status(200).json('Register sucessful'))
+          .catch(() => res.status(400).json('Internal error, contact the administrator'));
+      }
     })
-    .catch(() => res.status(500).json('Erro interno, tente novamente mais tarde'));
-
-  UserService.Add(db, data)
-    .then(() => res.status(200).json('Register sucessful'))
-    .catch((err) => res.status(400).json(`${err}`));
+    .catch(() => res.status(400).json('Internal error, contact the administrator'));
 };
 
 // Atualização de usuario

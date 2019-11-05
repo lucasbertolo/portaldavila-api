@@ -1,41 +1,27 @@
 
 // Retorno de usuarios filtrando por id
-
-const Get = (req, res, db) => {
-  const { id } = req.params;
-
-  db.select('*').from('user').where({ id })
+const Get = (db, username, password) => {
+  console.log(username);
+  db.select('*').from('user').where({ username })
     .then((usr) => {
       if (usr.length) {
-        res.json(usr[0]);
-      } else {
-        res.status(400).json('User not found');
+        return usr[0];
       }
+      return null;
     })
-    .catch((err) => res.status(400).json(`error getting user - ${err}`));
+    .catch((err) => Promise.reject(Error(err)));
 };
 
-const CheckUsername = (db, login) => db.select('login').from('user').where({ login })
-  .then((usr) => {
-    if (usr.length) {
-      Promise.resolve({ hasEntry: true });
-    }
+const GetAll = (db) => db.select('username').from('user')
+  .then((usr) => usr)
+  .catch(() => Promise.reject(Error('Error trying to get list of usernames')));
+
+const Add = (db, data) => db('user')
+  .insert({
+    ...data,
   })
-  .catch((err) => Promise.reject(Error(err)));
-
-const Add = (db, data) => {
-  const { password, login } = data;
-  const type_id = 2;
-
-  return db('user')
-    .insert({
-      pass: password,
-      login,
-      type_id,
-    })
-    .then(() => Promise.resolve('success'))
-    .catch((err) => Promise.reject(Error(`Error while registering new user - ${err}`)));
-};
+  .then(() => Promise.resolve('success'))
+  .catch((err) => Promise.reject(Error(`Error while registering new user - ${err}`)));
 
 // Atualização de usuario
 
@@ -86,5 +72,5 @@ module.exports = {
   Update,
   Add,
   Remove,
-  CheckUsername,
+  GetAll,
 };
