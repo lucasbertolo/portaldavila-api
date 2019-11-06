@@ -20,9 +20,9 @@ const PropertyPhotos = require('./controllers/PropertyPhotosController');
 // User requests
 routes.get('/user/:id', (req, res) => { User.Get(req, res, db); });
 routes.put('/user/:id', (req, res) => { User.Update(req, res, db); });
-routes.post('/user', (req, res) => { User.Add(req, res, db); });
+routes.post('/registeruser', (req, res) => { User.Add(req, res, db); });
 routes.delete('/user/:id', (req, res) => { User.Remove(req, res, db); });
-routes.get('/user', (req, res) => { User.Get(req, res, db); });
+routes.post('/user', (req, res) => { User.Get(req, res, db); });
 
 // PropertyInfo requests
 routes.get('/property/info/:id', (req, res) => { PropertyInfo.Get(req, res, db); });

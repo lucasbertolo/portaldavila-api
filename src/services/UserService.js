@@ -1,16 +1,14 @@
 
 // Retorno de usuarios filtrando por id
-const Get = (db, username, password) => {
-  console.log(username);
-  db.select('*').from('user').where({ username })
-    .then((usr) => {
-      if (usr.length) {
-        return usr[0];
-      }
-      return null;
-    })
-    .catch((err) => Promise.reject(Error(err)));
-};
+const Get = (db, username, password) => db.select(['username', 'email', 'phone', 'id'])
+  .from('user').where({ username, password })
+  .then((usr) => {
+    if (usr.length) {
+      return usr[0];
+    }
+    return null;
+  })
+  .catch((err) => Promise.reject(Error(err)));
 
 const GetAll = (db) => db.select('username').from('user')
   .then((usr) => usr)
