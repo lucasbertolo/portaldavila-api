@@ -5,7 +5,7 @@ function PropertyDetails(data, id) {
   this.dormitory = data.dormitory;
   this.garage = data.garage;
   this.bathroom = data.bathroom;
-  this.visiting_room = data.visiting_room;
+  this.living_room = data.living_room;
   this.dining_room = data.dining_room;
   this.suite = data.suite;
   this.laundry = data.laundry;

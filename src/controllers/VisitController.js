@@ -10,16 +10,20 @@ const Get = (req, res, db) => {
 
       return res.status(200).json({ msg: 'Visit not found' });
     })
-    .catch(() => res.status(400).json('Internal Error'));
+    .catch(() => {
+      res.status(400).json('Internal Error');
+    });
 };
 
 
 const Add = (req, res, db) => {
-  const data = Visit(req.body);
+  const data = new Visit(req.body);
 
-  VisitService.Add(db)
+  VisitService.Add(db, data)
     .then(() => res.status(200).json('Visit registered'))
-    .catch(() => res.status(400).json('Internal error, contact the administrator'));
+    .catch(() => {
+      res.status(400).json('Internal Error');
+    });
 };
 
 
@@ -57,7 +61,5 @@ const Add = (req, res, db) => {
 
 module.exports = {
   Get,
-  Update,
   Add,
-  Remove,
 };

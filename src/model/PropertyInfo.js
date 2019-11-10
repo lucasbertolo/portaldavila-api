@@ -8,6 +8,8 @@ function PropertyInfo(data) {
   this.creator_id = 1;
   this.area = data.area;
   this.building_area = data.building_area;
+  this.exchange = data.exchange;
+  this.building_loan = data.building_loan;
 
   return (
     this.neighborhood_id,
@@ -17,7 +19,9 @@ function PropertyInfo(data) {
     this.type_id,
     this.creator_id,
     this.area,
-    this.building_area
+    this.building_area,
+    this.exchange,
+    this.building_loan
   );
 }
 

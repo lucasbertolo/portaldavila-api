@@ -7,13 +7,14 @@ const User = require('./controllers/UserController');
 
 const Neighborhood = require('./controllers/NeighborhoodController');
 
+const Visit = require('./controllers/VisitController');
+
 const Property = require('./controllers/PropertyController');
 
 const PropertyInfo = require('./controllers/PropertyInfoController');
 const PropertyType = require('./controllers/PropertyTypeController');
 const PropertyDetails = require('./controllers/PropertyDetailsController');
 const PropertyFeatures = require('./controllers/PropertyFeaturesController');
-
 const PropertyPhotos = require('./controllers/PropertyPhotosController');
 
 
@@ -55,6 +56,9 @@ routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });
 
 // Property type requests
 routes.get('/typeofproperty', (req, res) => { PropertyType.List(req, res, db); });
+
+// Visit
+routes.post('/visit', (req, res) => { Visit.Add(req, res, db); });
 
 
 module.exports = routes;
