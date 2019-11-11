@@ -15,10 +15,10 @@ const Update = (db, id, data) => new Promise((resolve, reject) => {
     .catch((err) => reject(Error(err)));
 });
 
-const Get = (db, id) => new Promise((resolve, reject) => {
+const Get = (db, user_id) => new Promise((resolve, reject) => {
   db('visit_schedule')
     .select('*')
-    .where({ id })
+    .where({ user_id })
     .then((res) => resolve(res))
     .catch((err) => reject(Error(err)));
 });

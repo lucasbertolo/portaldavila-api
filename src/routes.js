@@ -58,6 +58,7 @@ routes.get('/neighborhood', (req, res) => { Neighborhood.List(req, res, db); });
 routes.get('/typeofproperty', (req, res) => { PropertyType.List(req, res, db); });
 
 // Visit
+routes.get('/visit/:id', (req, res) => { Visit.Get(req, res, db); });
 routes.post('/visit', (req, res) => { Visit.Add(req, res, db); });
 
 
