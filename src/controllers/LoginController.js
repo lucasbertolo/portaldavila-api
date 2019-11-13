@@ -23,7 +23,7 @@ const handleRegister = (req, res, db, bcrypt) => {
       if (isValid) {
         LoginService.handleRegister(db, hash, email, username, phone, type_id)
           .then((user) => res.status(200).json(user))
-          .catch((err) => res.status(400).json({ msg: 'Erro ao registrar, tente novamente mais tarde' }));
+          .catch(() => res.status(400).json({ msg: 'Erro ao registrar, tente novamente mais tarde' }));
       }
     });
 };
