@@ -15,6 +15,18 @@ const Get = (req, res, db) => {
     });
 };
 
+const GetAll = (req, res, db) => {
+  VisitService.GetAll(db)
+    .then((item) => {
+      if (item) { return res.status(200).json(item); }
+
+      return res.status(200).json({ msg: 'Nenhuma visita encontrada' });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 
 const Add = (req, res, db) => {
   const data = new Visit(req.body);
@@ -62,4 +74,5 @@ const Add = (req, res, db) => {
 module.exports = {
   Get,
   Add,
+  GetAll,
 };

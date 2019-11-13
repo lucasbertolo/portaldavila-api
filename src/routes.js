@@ -1,9 +1,11 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const db = require('./db');
 
 const routes = express.Router();
 
 const User = require('./controllers/UserController');
+const Login = require('./controllers/LoginController');
 
 const Neighborhood = require('./controllers/NeighborhoodController');
 
@@ -21,9 +23,9 @@ const PropertyPhotos = require('./controllers/PropertyPhotosController');
 // User requests
 routes.get('/user/:id', (req, res) => { User.Get(req, res, db); });
 routes.put('/user/:id', (req, res) => { User.Update(req, res, db); });
-routes.post('/registeruser', (req, res) => { User.Add(req, res, db); });
 routes.delete('/user/:id', (req, res) => { User.Remove(req, res, db); });
-routes.post('/user', (req, res) => { User.Get(req, res, db); });
+routes.post('/signin', (req, res) => { Login.handleSignin(req, res, db, bcrypt); });
+routes.post('/register', (req, res) => { Login.handleRegister(req, res, db, bcrypt); });
 
 // PropertyInfo requests
 routes.get('/property/info/:id', (req, res) => { PropertyInfo.Get(req, res, db); });
@@ -59,6 +61,7 @@ routes.get('/typeofproperty', (req, res) => { PropertyType.List(req, res, db); }
 
 // Visit
 routes.get('/visit/:id', (req, res) => { Visit.Get(req, res, db); });
+routes.post('/visitschedule', (req, res) => { Visit.GetAll(req, res, db); });
 routes.post('/visit', (req, res) => { Visit.Add(req, res, db); });
 
 

@@ -29,7 +29,9 @@ const Add = (req, res, db) => {
     }).then(() => {
       if (isValid) {
         UserService.Add(db, data)
-          .then(() => res.status(200).json('Register sucessful'))
+          .then((item) => {
+            res.status(200).json(item);
+          })
           .catch(() => res.status(400).json('Internal error, contact the administrator'));
       }
     })

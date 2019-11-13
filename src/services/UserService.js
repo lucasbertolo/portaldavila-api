@@ -1,6 +1,6 @@
 
 // Retorno de usuarios filtrando por id
-const Get = (db, username, password) => db.select(['username', 'email', 'phone', 'id'])
+const Get = (db, username, password) => db.select(['username', 'email', 'phone', 'id', 'type_id'])
   .from('user').where({ username, password })
   .then((usr) => {
     if (usr.length) {
@@ -18,7 +18,7 @@ const Add = (db, data) => db('user')
   .insert({
     ...data,
   })
-  .then(() => Promise.resolve('success'))
+  .then((item) => Promise.resolve({ username: data.username, type_id: data.type_id, id: item[0] }))
   .catch((err) => Promise.reject(Error(`Error while registering new user - ${err}`)));
 
 // Atualização de usuario
