@@ -28,9 +28,8 @@ routes.put('/user/:id', (req, res) => {
 routes.delete('/user/:id', (req, res) => {
   User.Remove(req, res, db);
 });
-routes.post('/signin', (req, res) => {
-  Login.handleSignin(req, res, db, bcrypt);
-});
+routes.post('/signin', Login.signinAuthentication(db, bcrypt));
+
 routes.post('/register', (req, res) => {
   Login.handleRegister(req, res, db, bcrypt);
 });
