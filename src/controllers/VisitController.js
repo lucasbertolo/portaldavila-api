@@ -33,7 +33,8 @@ const Add = (req, res, db) => {
 
   VisitService.Add(db, data)
     .then(() => res.status(200).json('Visit registered'))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       res.status(400).json('Internal Error');
     });
 };
