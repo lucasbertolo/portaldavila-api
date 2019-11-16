@@ -55,7 +55,7 @@ const createSessions = (user) => {
   const { id } = user;
   const token = signToken(user);
   return {
-    success: 'true', userId: id, token,
+    success: 'true', userId: id, user, token,
   };
 };
 const signinAuthentication = (db, bcrypt) => (req, res) => {
