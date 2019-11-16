@@ -22,7 +22,7 @@ const PropertyPhotos = require('./controllers/PropertyPhotosController');
 routes.get('/user/:id', (req, res) => {
   User.Get(req, res, db);
 });
-routes.put('/user/:id', (req, res) => {
+routes.put('/user', (req, res) => {
   User.Update(req, res, db);
 });
 routes.delete('/user/:id', (req, res) => {

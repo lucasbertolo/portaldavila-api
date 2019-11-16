@@ -1,5 +1,3 @@
-
-// Retorno de usuarios filtrando por id
 const UserService = require('../services/UserService');
 const User = require('../model/User');
 
@@ -8,14 +6,14 @@ const Get = (req, res, db) => {
 
   UserService.Get(db, id)
     .then((item) => {
-      if (item) { return res.json(item); }
+      if (item) {
+        return res.json(item);
+      }
 
       return res.status(404).json({ msg: 'User not found' });
     })
     .catch(() => res.status(400).json('Internal Error'));
 };
-
-// Cadastro de novo usuario
 
 const Add = (req, res, db) => {
   const data = new User(req.body);
@@ -27,7 +25,8 @@ const Add = (req, res, db) => {
         res.status(200).json({ msg: 'user already existent' });
         isValid = false;
       }
-    }).then(() => {
+    })
+    .then(() => {
       if (isValid) {
         UserService.Add(db, data)
           .then((item) => {
@@ -39,40 +38,17 @@ const Add = (req, res, db) => {
     .catch(() => res.status(400).json('Internal error, contact the administrator'));
 };
 
-// Atualização de usuario
-
 const Update = (req, res, db) => {
-  const { id } = req.params;
-  const {
-    pass,
-    login,
-  } = req.body;
+  const { user_id } = req.body;
+  const data = new User(req.body);
 
-  // Checar se é o próprio usuário trocando a senha e fazer o hash
-
-  // validar se existe usuario com o mesmo login na troca
-
-  // adicionar transaction
-
-  db('user')
-    .where({ id })
-    .update({
-      pass,
-      login,
-    })
-    .then((data) => {
-      if (data === 1) {
-        res.status(200).json('User updated');
-      } else res.status(400).json('Id inexistent');
-    })
-    .catch((err) => res.status(400).json(`erro - ${err}`));
+  UserService.Update(db, user_id, data)
+    .then(() => res.status(200).json('Successful updated'))
+    .catch(() => res.status(500).json('Error trying to update'));
 };
 
-// Remover usuario
 const Remove = (req, res, db) => {
   const { id } = req.params;
-
-  // Checar por token ou validar autorizacao para apagar usuario
 
   db('user')
     .where({ id })
@@ -81,8 +57,13 @@ const Remove = (req, res, db) => {
     .catch((err) => res.status(400).json(`Error - ${err}`));
 };
 
-// trocar tipo de usuario
+// const setContactOption = (req,res,db) => {
+//   const {user_id, contact_type} = req.body;
 
+//   UserService.setContactOption(db, user_id, contact_type)
+//     .then(() => res.status(200).json('Success'))
+//     .catch(() => res.status(500).json('Error trying to update'))
+// }
 module.exports = {
   Get,
   Update,

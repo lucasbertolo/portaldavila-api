@@ -23,38 +23,21 @@ const Add = (db, data) => db('user')
 
 // Atualização de usuario
 
-const Update = (req, res, db) => {
-  const { id } = req.params;
-  const {
-    pass,
-    login,
-  } = req.body;
+const Update = (db, id, data) => db('user')
+  .where({ id })
+  .update({
+    ...data,
+  })
+  .then((res) => {
+    if (res === 1) {
+      Promise.resolve('User updated');
+    } else Promise.reject(Error('User inexistent'));
+  })
+  .catch((err) => Promise.reject(Error(err)));
 
-  // Checar se é o próprio usuário trocando a senha e fazer o hash
-
-  // validar se existe usuario com o mesmo login na troca
-
-  // adicionar transaction
-
-  db('user')
-    .where({ id })
-    .update({
-      pass,
-      login,
-    })
-    .then((data) => {
-      if (data === 1) {
-        res.status(200).json('User updated');
-      } else res.status(400).json('Id inexistent');
-    })
-    .catch((err) => res.status(400).json(`erro - ${err}`));
-};
-
-// Remover usuario
 const Remove = (req, res, db) => {
   const { id } = req.params;
 
-  // Checar por token ou validar autorizacao para apagar usuario
 
   db('user')
     .where({ id })
