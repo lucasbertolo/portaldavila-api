@@ -4,12 +4,13 @@ const UserService = require('../services/UserService');
 const User = require('../model/User');
 
 const Get = (req, res, db) => {
-  const { username, password } = req.body.auth;
-  UserService.Get(db, username, password)
-    .then((item) => {
-      if (item) { return res.status(200).json(item); }
+  const { id } = req.params;
 
-      return res.status(200).json({ msg: 'User not found' });
+  UserService.Get(db, id)
+    .then((item) => {
+      if (item) { return res.json(item); }
+
+      return res.status(404).json({ msg: 'User not found' });
     })
     .catch(() => res.status(400).json('Internal Error'));
 };

@@ -14,8 +14,6 @@ const handleRegister = (db, hash, email, username, phone, type_id) => db.transac
       .then((user) => Promise.resolve({
         username,
         userId: user[0],
-        phone,
-        type_id,
       })))
     .then(trx.commit)
     .catch(trx.rollback);

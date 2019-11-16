@@ -43,10 +43,10 @@ const getAuthTokenId = (res, token) => {
 };
 
 const signToken = ({
-  username, type_id, phone, email, id,
+  username, id,
 }) => {
   const jwtPayload = {
-    username, type_id, phone, email, userId: id,
+    username, userId: id,
   };
   return jwt.sign(jwtPayload, process.env.JWTSECRET, { expiresIn: '2 days' });
 };
@@ -55,7 +55,7 @@ const createSessions = (user) => {
   const { id } = user;
   const token = signToken(user);
   return {
-    success: 'true', userId: id, user, token,
+    success: 'true', userId: id, token,
   };
 };
 const signinAuthentication = (db, bcrypt) => (req, res) => {

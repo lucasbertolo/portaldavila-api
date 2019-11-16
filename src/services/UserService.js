@@ -1,7 +1,7 @@
 
 // Retorno de usuarios filtrando por id
-const Get = (db, username, password) => db.select(['username', 'email', 'phone', 'id', 'type_id'])
-  .from('user').where({ username, password })
+const Get = (db, id) => db.select('*')
+  .from('user').where({ id })
   .then((usr) => {
     if (usr.length) {
       return usr[0];
