@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-
+const PropertyPhotosService = require('../services/PropertyPhotosService');
 const PropertyService = require('../services/PropertyService');
 
 const Get = (req, res, db) => {
@@ -7,6 +6,24 @@ const Get = (req, res, db) => {
     .then((item) => {
       if (item) {
         res.status(200).json(item);
+      } else {
+        res.status(404).json('Not found');
+      }
+    })
+    .catch((err) => res.status(400).json(`${err}`));
+};
+
+const GetDescription = (req, res, db) => {
+  PropertyService.Get(req, db)
+    .then((item) => {
+      if (item) {
+        const property = item;
+        PropertyPhotosService.Get(req, db)
+          .then((resp) => {
+            const images = resp.map((x) => JSON.stringify(x));
+            res.send({ property, images });
+          })
+          .catch((err) => res.status(400).json(`${err}`));
       } else {
         res.status(404).json('Not found');
       }
@@ -62,4 +79,5 @@ module.exports = {
   Update,
   GetAll,
   Remove,
+  GetDescription,
 };

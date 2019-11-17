@@ -78,6 +78,9 @@ routes.delete('/property/photos/:id', (req, res) => {
 routes.get('/property/:id', (req, res) => {
   Property.Get(req, res, db);
 });
+routes.get('/property-description/:id', (req, res) => {
+  Property.GetDescription(req, res, db);
+});
 routes.put('/property/:id', (req, res) => {
   Property.Update(req, res, db);
 });

@@ -18,7 +18,6 @@ const Get = (req, res, db) => {
 
 const Add = (req, res, db) => {
   const data = new Favorite(req.body);
-  console.log(data);
   FavoriteService.GetByProperty(db, data.property_id, data.user_id)
     .then((item) => {
       if (item) {
