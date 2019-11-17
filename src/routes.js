@@ -111,6 +111,9 @@ routes.post('/visitschedule', (req, res) => {
 routes.post('/visit', (req, res) => {
   Visit.Add(req, res, db);
 });
+routes.put('/visit', (req, res) => {
+  Visit.Update(req, res, db);
+});
 
 // Favorites
 routes.get('/favorite/:id', (req, res) => {

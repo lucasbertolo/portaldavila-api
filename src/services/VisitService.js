@@ -24,10 +24,10 @@ const Get = (db, user_id) => new Promise((resolve, reject) => {
 });
 
 const GetAll = (db) => new Promise((resolve, reject) => {
-  db('visit_schedule')
-    .join('property', 'property.id', 'visit_schedule.property_id')
-    .join('user', 'user.id', 'visit_schedule.user_id')
-    .select('*')
+  db('visit_schedule As vs')
+    .join('property As p', 'p.id', 'vs.property_id')
+    .join('user As u', 'u.id', 'vs.user_id')
+    .select('p.*', 'u.*', 'vs.id AS visit_id', 'time_register', 'date_register', 'status', 'vs.property_id')
     .then((res) => resolve(res))
     .catch((err) => reject(Error(err)));
 });

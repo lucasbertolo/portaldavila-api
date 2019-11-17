@@ -33,47 +33,25 @@ const Add = (req, res, db) => {
 
   VisitService.Add(db, data)
     .then(() => res.status(200).json('Visit registered'))
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(400).json('Internal Error');
     });
 };
 
 
-// const Update = (req, res, db) => {
-//   const { id } = req.params;
-//   const {
-//     pass,
-//     login,
-//   } = req.body;
+const Update = (req, res, db) => {
+  const { visit_id } = req.body;
+  const data = new Visit(req.body);
 
-//   db('user')
-//     .where({ id })
-//     .update({
-//       pass,
-//       login,
-//     })
-//     .then((data) => {
-//       if (data === 1) {
-//         res.status(200).json('User updated');
-//       } else res.status(400).json('Id inexistent');
-//     })
-//     .catch((err) => res.status(400).json(`erro - ${err}`));
-// };
-
-// const Remove = (req, res, db) => {
-//   const { id } = req.params;
-
-//   db('user')
-//     .where({ id })
-//     .del()
-//     .then(() => res.status(200).json('User deleted'))
-//     .catch((err) => res.status(400).json(`Error - ${err}`));
-// };
+  VisitService.Update(db, visit_id, data)
+    .then(() => res.status(200).json('Successful updated'))
+    .catch(() => res.status(500).json('Error while updating'));
+};
 
 
 module.exports = {
   Get,
   Add,
   GetAll,
+  Update,
 };
