@@ -113,7 +113,7 @@ const Get = (req, db) => {
   // eslint-disable-next-line camelcase
   const property_id = id;
 
-  return db.select(['url', 'alt', 'id', 'isCover']).from('property_photos').where({ property_id })
+  return db.select(['url', 'alt', 'id', 'iscover']).from('property_photos').where({ property_id })
     .then((item) => {
       if (item) {
         return item;

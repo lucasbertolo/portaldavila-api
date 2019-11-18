@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 function User(data) {
-  console.log(data);
   this.type_id = data.type_id;
   this.email = data.email;
   this.username = data.username;

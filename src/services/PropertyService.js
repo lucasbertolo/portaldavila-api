@@ -20,7 +20,7 @@ const Get = (req, db) => {
 const GetAll = (req, db) => db.select('*').from('property')
   .join('property_details', 'property.id', 'property_details.property_id')
   .join('property_photos', 'property.id', 'property_photos.property_id')
-  .where('property_photos.isCover', '=', true)
+  .where('property_photos.iscover', '=', true)
   .then((data) => data)
   .catch((err) => Promise.reject(Error(err)));
 
@@ -32,8 +32,7 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
   return new Promise((resolve, reject) => {
     PropertyInfoService.Add(dataInfo, db)
       .then((item) => {
-      // eslint-disable-next-line prefer-destructuring
-        id = item[0];
+        id = item[0].id;
       })
       .catch((err) => messages.push(err))
 

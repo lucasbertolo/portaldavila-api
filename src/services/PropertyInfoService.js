@@ -7,6 +7,7 @@ const Add = (data, db) => {
       .insert({
         ...info,
       })
+      .returning(['id'])
       .then((res) => resolve(res))
       .catch((err) => reject(Error(err)));
   });
@@ -62,7 +63,7 @@ const Remove = (req, db) => {
 const setVisibility = (db, id, status) => db('property')
   .where({ id })
   .update({
-    isVisible: status,
+    isvisible: status,
   })
   .then(() => Promise.resolve('Visibility updated'))
   .catch((err) => Promise.reject(Error(err)));

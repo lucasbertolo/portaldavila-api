@@ -10,6 +10,7 @@ function PropertyInfo(data) {
   this.building_area = data.building_area;
   this.exchange = data.exchange;
   this.building_loan = data.building_loan;
+  this.isvisible = data.isVisible || true;
 
   return (
     this.neighborhood_id,

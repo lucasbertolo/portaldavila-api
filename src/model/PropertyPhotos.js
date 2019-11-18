@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
-function PropertyDetails(data) {
+function PropertyPhotos(data) {
   this.property_id = data.property_id;
   this.url = data.url;
   this.alt = data.alt;
-  this.isCover = data.isCover;
+  this.iscover = data.iscover;
 
   return (
     this.property_id,
     this.url,
     this.alt,
-    this.isCover
+    this.iscover
   );
 }
 
-module.exports = PropertyDetails;
+module.exports = PropertyPhotos;
