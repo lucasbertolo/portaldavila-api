@@ -126,4 +126,6 @@ routes.post('/favorite', (req, res) => {
   Favorite.Add(req, res, db);
 });
 
+routes.get('/', (req, res) => { res.send('Working just fine'); });
+
 module.exports = routes;
