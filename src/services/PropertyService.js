@@ -42,11 +42,18 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
       .then(() => PropertyFeaturesService.Add(dataFeatures, db, id))
       .catch((err) => messages.push(err))
 
-      .then(() => PropertyPhotosService.Add(dataPhotos, db, id))
+      .then(() => {
+        if (dataPhotos.length > 0) {
+          dataPhotos.map((x) => PropertyPhotosService.Add(db, x, id))
+            .then()
+            .catch((err) => messages.push(err));
+        }
+      })
       .catch((err) => messages.push(err))
 
       .then(() => {
         if (messages.length > 0) {
+          // console.log(messages);
           return reject(Error(messages));
         }
         return resolve('success');
@@ -56,38 +63,40 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
 
 const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
   try {
+    const { id } = req.params;
     if (dataDetails !== undefined) {
       PropertyInfoService.Update(req, dataInfo, db)
         .then()
-        .catch((err) => {
-          Promise.reject(Error(err));
-        });
+        .catch((err) => Promise.reject(Error(err)));
     }
 
     if (dataDetails !== undefined) {
       PropertyDetailsService.Update(req, dataDetails, db)
         .then()
-        .catch((err) => {
-          Promise.reject(Error(err));
-        });
+        .catch((err) => Promise.reject(Error(err)));
     }
 
     if (dataFeatures !== undefined) {
       PropertyFeaturesService.Update(req, dataFeatures, db)
         .then()
-        .catch((err) => {
-          Promise.reject(Error(err));
-        });
-    }
-    if (dataPhotos !== undefined) {
-      PropertyPhotosService.Update(req, dataPhotos, db)
-        .then()
         .catch((err) => Promise.reject(Error(err)));
     }
-
+    if (dataPhotos !== undefined) {
+      if (dataPhotos.length > 1) {
+        dataPhotos.map((item) => {
+          if (item.id !== undefined) {
+            return PropertyPhotosService.Update(db, item, item.id)
+              .then(() => Promise.resolve())
+              .catch((err) => Promise.reject(Error(err)));
+          }
+          return PropertyPhotosService.Add(db, item, id)
+            .then(() => Promise.resolve())
+            .catch((err) => Promise.reject(Error(err)));
+        });
+      }
+    }
     return Promise.resolve();
   } catch (err) {
-    // eslint-disable-next-line no-console
     Promise.reject(Error(err));
   }
 };

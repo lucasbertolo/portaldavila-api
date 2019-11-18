@@ -1,5 +1,6 @@
 const aws = require('aws-sdk');
 const PropertyPhotos = require('../model/PropertyPhotos');
+const config = require('../config');
 
 require('dotenv').config();
 
@@ -13,8 +14,8 @@ const S3_BUCKET = process.env.bucket;
 
 const signS3 = (req) => {
   const s3 = new aws.S3();
-  const { fileName } = req.body;
-  const { fileType } = req.body;
+
+  const { fileName, fileType } = req.body;
 
   const s3Params = {
     Bucket: S3_BUCKET,
@@ -33,61 +34,37 @@ const signS3 = (req) => {
         signedRequest: data,
         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
       };
-
       return resolve({ success: true, data: { returnData } });
     });
   });
 };
 
-const Add = (data, db, id) => {
-  const list = data.map((x) => {
-    const item = { ...x };
-    item.property_id = id;
-    return item;
-  });
+const Add = (db, data, id) => {
+  const {
+    url, alt, iscover, cdn,
+  } = data;
 
-  const photos = [];
-  if (Array.isArray(list) && list.length) {
-    // eslint-disable-next-line array-callback-return
-    list.map((item) => {
-      photos.push(new PropertyPhotos(item));
-    });
-  }
-
-  return new Promise((resolve, reject) => {
-    db('property_photos')
-      .insert(photos)
-      .then()
-      .catch((err) => reject(Error(err)));
-
-    resolve('success');
-  });
+  return db('property_photos')
+    .insert({
+      property_id: id,
+      url,
+      cdn,
+      alt,
+      iscover,
+    })
+    .then(() => Promise.resolve())
+    .catch((err) => Promise.reject(err));
 };
 
-const Update = (req, data, db) => {
-  // eslint-disable-next-line camelcase
-  const property_id = req.params.id;
-
-  // eslint-disable-next-line array-callback-return
-  data.map((item) => {
-    const { id } = item;
-    const newphotos = [];
-    const photo = new PropertyPhotos(item);
-    if (id !== undefined) {
-      db('property_photos')
-        .where({ id })
-        .update({
-          ...photo,
-        })
-        .then()
-        .catch((err) => Promise.reject(new Error(err)));
-    } else {
-      newphotos.push(item);
-      Add(newphotos, db, property_id);
-    }
-  });
-
-  return Promise.resolve();
+const Update = (db, data, id) => {
+  const photo = new PropertyPhotos(data);
+  return db('property_photos')
+    .where({ id })
+    .update({
+      ...photo,
+    })
+    .then(() => Promise.resolve())
+    .catch((err) => Promise.reject(new Error(err)));
 };
 
 const Remove = (req, db) => {
@@ -102,7 +79,8 @@ const Remove = (req, db) => {
     .then((data) => {
       if (data === 1) {
         return 'Property deleted';
-      } return Promise.reject(Error('Id inexistent'));
+      }
+      return Promise.reject(Error('Id inexistent'));
     })
     .catch((err) => Promise.reject(new Error(err)));
 };
@@ -113,7 +91,10 @@ const Get = (req, db) => {
   // eslint-disable-next-line camelcase
   const property_id = id;
 
-  return db.select(['url', 'alt', 'id', 'iscover']).from('property_photos').where({ property_id })
+  return db
+    .select(['url', 'alt', 'id', 'iscover', 'cdn'])
+    .from('property_photos')
+    .where({ property_id })
     .then((item) => {
       if (item) {
         return item;
