@@ -1,6 +1,4 @@
 const express = require('express');
-// const db = require("./db");
-// const path = require('path');
 const cors = require('cors');
 
 const app = express();
@@ -20,4 +18,8 @@ app.use(express.json());
 
 app.use(require('./routes'));
 
-app.listen(8000);
+const { PORT } = process.env;
+
+app.listen(PORT || 8000, () => {
+  console.log(`server is listening on port ${PORT}`);
+});
