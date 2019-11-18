@@ -27,14 +27,14 @@ const signS3 = (req) => {
   return new Promise((resolve, reject) => {
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if (err) {
-        reject(Error({ success: false, error: err }));
+        return reject(Error({ success: false, error: err }));
       }
       const returnData = {
         signedRequest: data,
         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
       };
 
-      resolve({ success: true, data: { returnData } });
+      return resolve({ success: true, data: { returnData } });
     });
   });
 };

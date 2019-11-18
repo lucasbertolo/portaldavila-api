@@ -21,14 +21,10 @@ const GetDescription = (req, res, db) => {
         PropertyPhotosService.Get(req, db)
           .then((resp) => {
             const images = resp.map((x) => JSON.stringify(x));
-            console.log(item);
-            console.log(images);
+
             res.send({ property, images });
           })
-          .catch((err) => {
-            console.log(err);
-            res.status(400).json(`${err}`);
-          });
+          .catch((err) => res.status(400).json(`${err}`));
       } else {
         res.status(404).json('Not found');
       }

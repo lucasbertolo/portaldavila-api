@@ -53,8 +53,6 @@ const signToken = ({
 
 const createSessions = (user) => {
   const { id } = user;
-  console.log('aqui');
-
   const token = signToken(user);
   return {
     success: 'true', userId: id, token,
@@ -65,14 +63,10 @@ const signinAuthentication = (db, bcrypt) => (req, res) => {
   return token
     ? getAuthTokenId(res, token)
     : LoginService.handleSignin(db, username, password, bcrypt)
-      .then((user) => {
-        console.log(user);
-        return (
-
-          user.id && user.username
-            ? createSessions(user)
-            : Promise.reject(Error('Internal error creating token')));
-      })
+      .then((user) => (
+        user.id && user.username
+          ? createSessions(user)
+          : Promise.reject(Error('Internal error creating token'))))
       .then((session) => res.json(session))
       .catch((err) => res.status(400).json(err));
 };
