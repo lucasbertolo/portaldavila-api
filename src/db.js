@@ -15,14 +15,22 @@
 // const {
 //   host, user, password, port,
 // } = config;
+// const knex = require('knex')({
+//   client: 'pg',
+//   version: '7.2',
+//   connection: {
+//     host: '127.0.0.1',
+//     user: 'postgres',
+//     password: '123456',
+//     database: 'postgres',
+//   },
+// });
+
 const knex = require('knex')({
   client: 'pg',
-  version: '7.2',
   connection: {
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: '123456',
-    database: 'postgres',
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
   },
 });
 
