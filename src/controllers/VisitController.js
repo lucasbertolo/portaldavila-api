@@ -45,7 +45,10 @@ const Update = (req, res, db) => {
 
   VisitService.Update(db, visit_id, data)
     .then(() => res.status(200).json('Successful updated'))
-    .catch(() => res.status(500).json('Error while updating'));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json('Error while updating');
+    });
 };
 
 
