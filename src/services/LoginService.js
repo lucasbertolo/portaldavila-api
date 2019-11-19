@@ -11,9 +11,10 @@ const handleRegister = (db, hash, email, username, phone, type_id) => db.transac
         phone,
         type_id,
       })
+      .returning(['id'])
       .then((user) => Promise.resolve({
         username,
-        userId: user[0],
+        userId: user[0].id,
       })))
     .then(trx.commit)
     .catch(trx.rollback);

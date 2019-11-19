@@ -44,16 +44,16 @@ const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
 
       .then(() => {
         if (dataPhotos.length > 0) {
-          dataPhotos.map((x) => PropertyPhotosService.Add(db, x, id))
-            .then()
-            .catch((err) => messages.push(err));
+          dataPhotos.map((x) => PropertyPhotosService.Add(db, x, id));
         }
       })
-      .catch((err) => messages.push(err))
+      .then(() => Promise.resolve())
+      .catch((err) => {
+        messages.push(err);
+      })
 
       .then(() => {
         if (messages.length > 0) {
-          // console.log(messages);
           return reject(Error(messages));
         }
         return resolve('success');

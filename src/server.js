@@ -17,9 +17,15 @@ app.use(express.json());
 
 app.use(require('./routes'));
 
+app.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
+
 const { PORT } = process.env;
 
 app.listen(8000, () => {
   // eslint-disable-next-line no-console
-  console.log(`server is listening on port ${PORT}`);
+  console.log(`server is listening on port ${PORT || 8000}`);
 });
