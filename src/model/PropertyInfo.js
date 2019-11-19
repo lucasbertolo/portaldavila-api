@@ -5,7 +5,7 @@ function PropertyInfo(data) {
   this.price = data.price || 0;
   this.purpose_id = data.purpose_id || 0;
   this.type_id = data.type_id || 0;
-  this.creator_id = 1;
+  this.creator_id = data.creator_id || 1;
   this.area = data.area;
   this.building_area = data.building_area;
   this.exchange = data.exchange;
