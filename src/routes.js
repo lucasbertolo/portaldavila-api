@@ -119,9 +119,16 @@ routes.put('/visit', (req, res) => {
 });
 
 // Favorites
-routes.get('/favorite/:id', (req, res) => {
+routes.get('/favorite/:user_id&:property_id', (req, res) => {
   Favorite.Get(req, res, db);
 });
+routes.get('/favorite/:user_id', (req, res) => {
+  Favorite.GetByUser(req, res, db);
+});
+routes.post('/favorite', (req, res) => {
+  Favorite.Add(req, res, db);
+});
+
 routes.post('/favorite', (req, res) => {
   Favorite.Add(req, res, db);
 });
