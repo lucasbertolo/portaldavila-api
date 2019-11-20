@@ -16,8 +16,10 @@ const Update = (db, id, data) => new Promise((resolve, reject) => {
 });
 
 const Get = (db, user_id) => new Promise((resolve, reject) => {
-  db('visit_schedule')
-    .select('*')
+  db('visit_schedule As vs')
+    .join('property As p', 'p.id', 'vs.property_id')
+    .join('user As u', 'u.id', 'vs.user_id')
+    .select('p.*', 'u.*', 'vs.id AS visit_id', 'time_register', 'date_register', 'status', 'vs.property_id')
     .where({ user_id })
     .then((res) => resolve(res))
     .catch((err) => reject(Error(err)));
