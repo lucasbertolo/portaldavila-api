@@ -104,7 +104,6 @@ const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
 
 const Remove = (db, id) => {
   const messages = [];
-  console.log(id);
   return new Promise((resolve, reject) => {
     VisitService.Remove(db, id)
       .then()
