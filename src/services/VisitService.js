@@ -36,13 +36,18 @@ const GetAll = (db) => new Promise((resolve, reject) => {
     .catch((err) => reject(Error(err)));
 });
 
-// const Remove = (db, id) => new Promise((resolve, reject) => {
-
-// })
+const Remove = (db, property_id) => new Promise((resolve, reject) => {
+  db('visit_schedule')
+    .where({ property_id })
+    .del()
+    .then((res) => resolve(res))
+    .catch((err) => reject(Error(err)));
+});
 
 module.exports = {
   Add,
   Update,
   Get,
   GetAll,
+  Remove,
 };

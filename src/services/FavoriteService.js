@@ -28,10 +28,19 @@ const GetByUser = (db, user_id) => new Promise((resolve, reject) => {
     .catch((err) => reject(Error(err)));
 });
 
+const Remove = (db, property_id) => new Promise((resolve, reject) => {
+  db('favorites')
+    .where({ property_id })
+    .del()
+    .then((res) => resolve(res))
+    .catch((err) => reject(Error(err)));
+});
+
 
 module.exports = {
   Add,
   Update,
   Get,
   GetByUser,
+  Remove,
 };

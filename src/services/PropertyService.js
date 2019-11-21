@@ -4,7 +4,8 @@ const PropertyDetailsService = require('./PropertyDetailsService');
 const PropertyInfoService = require('./PropertyInfoService');
 const PropertyFeaturesService = require('./PropertyFeaturesService');
 const PropertyPhotosService = require('./PropertyPhotosService');
-
+const FavoriteService = require('./FavoriteService');
+const VisitService = require('./VisitService');
 
 const Get = (req, db) => {
   const { id } = req.params;
@@ -101,13 +102,32 @@ const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
   }
 };
 
-const Remove = (req, res, db) => {
-  // Checar por token ou validar autorizacao para apagar usuario
-  // Delete no banco e tabelas relacionadas - CASCADE
-  // Deletar fotos na AWS - AUTOMATIZAR
-  PropertyInfoService.Remove(req, db)
-    .then(() => Promise.resolve('Property deleted'))
-    .catch((err) => Promise.reject(Error(err)));
+const Remove = (db, id) => {
+  const messages = [];
+  console.log(id);
+  return new Promise((resolve, reject) => {
+    VisitService.Remove(db, id)
+      .then()
+      .catch((err) => messages.push(err))
+      .then(() => FavoriteService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyPhotosService.RemoveByProperty(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyFeaturesService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyDetailsService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyInfoService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => {
+        if (messages.length > 0) {
+          console.log(messages);
+          return reject(Error(messages));
+        }
+        return resolve('success');
+      })
+      .catch();
+  });
 };
 
 module.exports = {

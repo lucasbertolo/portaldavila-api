@@ -85,6 +85,13 @@ const Remove = (req, db) => {
     .catch((err) => Promise.reject(new Error(err)));
 };
 
+
+const RemoveByProperty = (db, property_id) => db('property_photos')
+  .where({ property_id })
+  .del()
+  .then(() => Promise.resolve())
+  .catch((err) => Promise.reject(new Error(err)));
+
 const Get = (req, db) => {
   const { id } = req.params;
 
@@ -109,5 +116,6 @@ module.exports = {
   Add,
   Get,
   Remove,
+  RemoveByProperty,
   Update,
 };

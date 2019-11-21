@@ -69,7 +69,8 @@ const Update = (req, res, db) => {
 };
 
 const Remove = (req, res, db) => {
-  PropertyService.Remove(req, res, db)
+  const { id } = req.params;
+  PropertyService.Remove(db, id)
     .then(() => res.status(200).json('Success'))
     .catch((err) => res.status(400).json(`${err}`));
 };
