@@ -75,6 +75,13 @@ const Remove = (req, res, db) => {
     .catch((err) => res.status(400).json(`${err}`));
 };
 
+const GetFavorites = (req, res, db) => {
+  const { id } = req.params;
+  PropertyService.GetFavorites(db, id)
+    .then((item) => res.status(200).json(item))
+    .catch((err) => res.status(400).json(`${err}`));
+};
+
 module.exports = {
   Get,
   Add,
@@ -82,4 +89,5 @@ module.exports = {
   GetAll,
   Remove,
   GetDescription,
+  GetFavorites,
 };

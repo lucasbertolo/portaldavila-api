@@ -93,6 +93,9 @@ routes.post('/property', (req, res) => {
 routes.delete('/property/:id', (req, res) => {
   Property.Remove(req, res, db);
 });
+routes.get('/property-favorites/:id', (req, res) => {
+  Property.GetFavorites(req, res, db);
+});
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => {

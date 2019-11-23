@@ -26,6 +26,17 @@ const GetAll = (req, db) => db.select('*').from('property')
   .catch((err) => Promise.reject(Error(err)));
 
 
+const GetFavorites = (db, user_id) => db.select('*').from('property')
+  .join('property_details', 'property.id', 'property_details.property_id')
+  .join('property_photos', 'property.id', 'property_photos.property_id')
+  .join('favorites', 'favorites.property_id', 'property.id')
+  .join('user', 'user.id', 'favorites.user_id')
+  .where('property_photos.iscover', '=', true)
+  .andWhere('favorites.user_id', '=', user_id)
+  .then((data) => data)
+  .catch((err) => Promise.reject(Error(err)));
+
+
 const Add = (dataInfo, dataDetails, dataFeatures, dataPhotos, db) => {
   let id;
   const messages = [];
@@ -135,4 +146,5 @@ module.exports = {
   Update,
   GetAll,
   Remove,
+  GetFavorites,
 };
