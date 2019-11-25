@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 function PropertyFeatures(data, id) {
   this.description = data.description;
-  this.air_conditioning = data.airCondtioner || false;
+  this.air_conditioning = data.airConditioner || false;
   this.pool = data.pool || false;
   this.balcony = data.balcony || false;
   this.barbecue_grill = data.barbecueGrill || false;
