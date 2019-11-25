@@ -43,22 +43,11 @@ const Update = (req, data, db) => {
     .catch((err) => Promise.reject(new Error(err)));
 };
 
-const Remove = (req, db) => {
-  const { id } = req.params;
-
-  // Checar por token ou validar autorizacao para apagar usuario
-  // Delete no banco e tabelas relacionadas - CASCADE
-  // Deletar fotos na AWS - AUTOMATIZAR
-  return db('property')
-    .where({ id })
-    .del()
-    .then((data) => {
-      if (data === 1) {
-        return 'Property deleted';
-      } return Promise.reject(Error('Id inexistent'));
-    })
-    .catch((err) => Promise.reject(Error(err)));
-};
+const Remove = (db, id) => db('property')
+  .where({ id })
+  .del()
+  .then(() => Promise.resolve())
+  .catch((err) => Promise.reject(Error(err)));
 
 const setVisibility = (db, id, status) => db('property')
   .where({ id })

@@ -4,7 +4,8 @@ const PropertyDetailsService = require('./PropertyDetailsService');
 const PropertyInfoService = require('./PropertyInfoService');
 const PropertyFeaturesService = require('./PropertyFeaturesService');
 const PropertyPhotosService = require('./PropertyPhotosService');
-
+const FavoriteService = require('./FavoriteService');
+const VisitService = require('./VisitService');
 
 const Get = (req, db) => {
   const { id } = req.params;
@@ -21,6 +22,17 @@ const GetAll = (req, db) => db.select('*').from('property')
   .join('property_details', 'property.id', 'property_details.property_id')
   .join('property_photos', 'property.id', 'property_photos.property_id')
   .where('property_photos.iscover', '=', true)
+  .then((data) => data)
+  .catch((err) => Promise.reject(Error(err)));
+
+
+const GetFavorites = (db, user_id) => db.select('*').from('property')
+  .join('property_details', 'property.id', 'property_details.property_id')
+  .join('property_photos', 'property.id', 'property_photos.property_id')
+  .join('favorites', 'favorites.property_id', 'property.id')
+  .join('user', 'user.id', 'favorites.user_id')
+  .where('property_photos.iscover', '=', true)
+  .andWhere('favorites.user_id', '=', user_id)
   .then((data) => data)
   .catch((err) => Promise.reject(Error(err)));
 
@@ -101,13 +113,31 @@ const Update = (dataInfo, dataDetails, dataFeatures, dataPhotos, db, req) => {
   }
 };
 
-const Remove = (req, res, db) => {
-  // Checar por token ou validar autorizacao para apagar usuario
-  // Delete no banco e tabelas relacionadas - CASCADE
-  // Deletar fotos na AWS - AUTOMATIZAR
-  PropertyInfoService.Remove(req, db)
-    .then(() => Promise.resolve('Property deleted'))
-    .catch((err) => Promise.reject(Error(err)));
+const Remove = (db, id) => {
+  const messages = [];
+  return new Promise((resolve, reject) => {
+    VisitService.Remove(db, id)
+      .then()
+      .catch((err) => messages.push(err))
+      .then(() => FavoriteService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyPhotosService.RemoveByProperty(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyFeaturesService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyDetailsService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => PropertyInfoService.Remove(db, id))
+      .catch((err) => messages.push(err))
+      .then(() => {
+        if (messages.length > 0) {
+          console.log(messages);
+          return reject(Error(messages));
+        }
+        return resolve('success');
+      })
+      .catch();
+  });
 };
 
 module.exports = {
@@ -116,4 +146,5 @@ module.exports = {
   Update,
   GetAll,
   Remove,
+  GetFavorites,
 };

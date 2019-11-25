@@ -3,13 +3,7 @@ const PropertyService = require('../services/PropertyService');
 
 const Get = (req, res, db) => {
   PropertyService.Get(req, db)
-    .then((item) => {
-      if (item) {
-        res.status(200).json(item);
-      } else {
-        res.status(404).json('Not found');
-      }
-    })
+    .then((item) => res.status(200).json(item))
     .catch((err) => res.status(400).json(`${err}`));
 };
 
@@ -18,29 +12,22 @@ const GetDescription = (req, res, db) => {
     .then((item) => {
       if (item) {
         const property = item;
-        PropertyPhotosService.Get(req, db)
+        return PropertyPhotosService.Get(req, db)
           .then((resp) => {
             const images = resp.map((x) => JSON.stringify(x));
 
             res.send({ property, images });
           })
           .catch((err) => res.status(400).json(`${err}`));
-      } else {
-        res.status(404).json('Not found');
       }
+      res.status(200).json(item);
     })
     .catch((err) => res.status(400).json(`${err}`));
 };
 
 const GetAll = (req, res, db) => {
   PropertyService.GetAll(req, db)
-    .then((item) => {
-      if (item.length > 0) {
-        res.status(200).json(item);
-      } else {
-        res.status(404).json('No availables properties');
-      }
-    })
+    .then((item) => res.status(200).json(item))
     .catch((err) => res.status(400).json(`${err}`));
 };
 
@@ -69,8 +56,16 @@ const Update = (req, res, db) => {
 };
 
 const Remove = (req, res, db) => {
-  PropertyService.Remove(req, res, db)
+  const { id } = req.params;
+  PropertyService.Remove(db, id)
     .then(() => res.status(200).json('Success'))
+    .catch((err) => res.status(400).json(`${err}`));
+};
+
+const GetFavorites = (req, res, db) => {
+  const { id } = req.params;
+  PropertyService.GetFavorites(db, id)
+    .then((item) => res.status(200).json(item))
     .catch((err) => res.status(400).json(`${err}`));
 };
 
@@ -81,4 +76,5 @@ module.exports = {
   GetAll,
   Remove,
   GetDescription,
+  GetFavorites,
 };

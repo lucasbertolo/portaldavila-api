@@ -39,10 +39,10 @@ const Add = (req, res, db) => {
 };
 
 const Update = (req, res, db) => {
-  const { user_id } = req.body;
+  const { id } = req.body;
   const data = new User(req.body);
 
-  UserService.Update(db, user_id, data)
+  UserService.Update(db, id, data)
     .then(() => res.status(200).json('Successful updated'))
     .catch(() => res.status(500).json('Error trying to update'));
 };

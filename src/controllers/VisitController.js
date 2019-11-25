@@ -30,12 +30,17 @@ const GetAll = (req, res, db) => {
 
 const Add = (req, res, db) => {
   const data = new Visit(req.body);
-
-  VisitService.Add(db, data)
-    .then(() => res.status(200).json('Visit registered'))
-    .catch(() => {
-      res.status(400).json('Internal Error');
-    });
+  VisitService.checkEntries(db, data)
+    .then((item) => {
+      if (item.length > 0) {
+        res.status(500).json('There is already an entry for this user and property');
+      } else {
+        VisitService.Add(db, data)
+          .then(() => res.status(200).json('Visit registered'))
+          .catch(() => res.status(400).json('Internal Error'));
+      }
+    })
+    .catch(() => res.status(400).json('Internal Error'));
 };
 
 

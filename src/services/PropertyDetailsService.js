@@ -32,22 +32,11 @@ const Update = (req, data, db) => {
     .catch((err) => Promise.reject(new Error(err)));
 };
 
-const Remove = (req, db) => {
-  const { id } = req.params;
-
-  // Checar por token ou validar autorizacao para apagar usuario
-  // Delete no banco e tabelas relacionadas - CASCADE
-  // Deletar fotos na AWS - AUTOMATIZAR
-  return db('property_details')
-    .where({ id })
-    .del()
-    .then((item) => {
-      if (item === 1) {
-        return 'Property deleted';
-      } return Promise.reject(Error('Id inexistent'));
-    })
-    .catch((err) => Promise.reject(new Error(err)));
-};
+const Remove = (db, property_id) => db('property_details')
+  .where({ property_id })
+  .del()
+  .then(() => Promise.resolve())
+  .catch((err) => Promise.reject(new Error(err)));
 
 const Get = (req, db) => {
   const { id } = req.params;

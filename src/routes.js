@@ -1,11 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const db = require('./db');
 
 const routes = express.Router();
 
 const User = require('./controllers/UserController');
 const Login = require('./controllers/LoginController');
+const Contact = require('./controllers/ContactController');
 
 const Neighborhood = require('./controllers/NeighborhoodController');
 const Visit = require('./controllers/VisitController');
@@ -93,6 +95,9 @@ routes.post('/property', (req, res) => {
 routes.delete('/property/:id', (req, res) => {
   Property.Remove(req, res, db);
 });
+routes.get('/property-favorites/:id', (req, res) => {
+  Property.GetFavorites(req, res, db);
+});
 
 // Neighborhood requests
 routes.get('/neighborhood', (req, res) => {
@@ -119,11 +124,22 @@ routes.put('/visit', (req, res) => {
 });
 
 // Favorites
-routes.get('/favorite/:id', (req, res) => {
+routes.get('/favorite/:user_id&:property_id', (req, res) => {
   Favorite.Get(req, res, db);
+});
+routes.get('/favorite/:user_id', (req, res) => {
+  Favorite.GetByUser(req, res, db);
 });
 routes.post('/favorite', (req, res) => {
   Favorite.Add(req, res, db);
+});
+
+routes.post('/favorite', (req, res) => {
+  Favorite.Add(req, res, db);
+});
+
+routes.post('/contact', (req, res) => {
+  Contact.handleEmail(req, res, nodemailer, 'lucasbertolo2@gmail.com');
 });
 
 routes.get('/', (req, res) => { res.send('Working just fine'); });
