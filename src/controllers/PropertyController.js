@@ -33,11 +33,14 @@ const GetAll = (req, res, db) => {
 
 const Add = (req, res, db) => {
   const dataInfo = req.body.data.info;
+  const info = { ...dataInfo };
+  info.creator_id = req.body.creator_id;
+
   const dataDetails = req.body.data.details;
   const dataFeatures = req.body.data.features;
   const dataPhotos = req.body.data.images;
 
-  PropertyService.Add(dataInfo, dataDetails, dataFeatures, dataPhotos, db)
+  PropertyService.Add(info, dataDetails, dataFeatures, dataPhotos, db)
     .then((item) => {
       if (item) { res.status(200).json('Success'); }
     })
