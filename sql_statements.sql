@@ -586,6 +586,11 @@ COPY "public"."property" ("id", "neighborhood_id", "position", "price", "area", 
 18	8	{"lat":"-22.736852","long":"-47.626286"}	2300	200	100	1	3	f	f	t	1
 19	7	{"lat":"-22.725452","long":"-47.645847"}	700	40	35	1	4	f	f	t	1
 20	6	{}	4500	180	180	1	3	f	f	t	1
+21	5	{}	600	0	0	1	4	f	f	t	2
+22	6	{}	210000	38	38	2	4	t	t	t	2
+23	1	{}	350000	200	100	2	1	t	f	t	2
+24	4	{}	200000	130	100	1	5	t	f	t	2
+25	5	{}	500000	110	110	2	2	t	t	t	2
 \.
 
 
@@ -614,6 +619,11 @@ COPY "public"."property_details" ("property_id", "room", "dormitory", "garage", 
 18	\N	0	0	2	0	0	0	0	0	0	0	0
 19	\N	1	0	1	1	0	0	1	0	0	0	0
 20	\N	0	0	2	0	0	0	0	0	0	0	1
+21	\N	1	1	1	0	1	0	0	1	0	0	0
+22	\N	1	1	0	1	0	0	0	0	1	0	0
+23	\N	3	2	1	1	1	1	1	1	1	0	0
+24	\N	2	1	0	1	1	0	1	0	1	1	0
+25	\N	3	1	2	1	1	2	0	1	1	0	0
 \.
 
 
@@ -642,6 +652,11 @@ COPY "public"."property_features" ("property_id", "description", "air_conditioni
 18		f	f	f	f	t	f	f	f
 19		t	f	t	f	f	f	t	t
 20		f	f	f	f	f	f	f	t
+21		t	f	f	f	f	f	f	f
+22		t	t	t	t	t	t	t	t
+23		f	f	f	t	f	f	f	t
+24		t	t	f	t	f	f	f	f
+25		t	f	f	f	f	f	f	t
 \.
 
 
@@ -680,6 +695,18 @@ COPY "public"."property_photos" ("id", "property_id", "url", "alt", "iscover", "
 28	9	https://portalvilabucket.s3.sa-east-1.amazonaws.com/ap3-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698110&Signature=V5MNBUtcpRjPrIwQMNy%2Fx2J0PuM%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/ap3-2
 29	9	https://portalvilabucket.s3.sa-east-1.amazonaws.com/ap3-3?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698114&Signature=PTG1JSlBvNKwd9VZBRLu9hsFdL8%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/ap3-3
 30	9	https://portalvilabucket.s3.sa-east-1.amazonaws.com/ap3-4?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698120&Signature=7tY5X8FMFNjvLC0YJOEKJ1d8dyk%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/ap3-4
+67	21	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Kt2-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574720614&Signature=GDj5mWjMgYweMGxdtgLI%2FM1PE2U%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Kt2-1
+69	22	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Kt5-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574720810&Signature=y9%2BJ1V2h3FO2fSkkynVI9EQ7vss%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Kt5-1
+71	22	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Kt5-3?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574720824&Signature=JjK%2BkHDf3tWyclGdpI31URVEsek%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Kt5-3
+72	23	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Cs1-01?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721688&Signature=gmuC4PGdQtXydcHsEPCbe9rMleo%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Cs1-01
+73	23	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Cs1-02?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721696&Signature=kS9%2FPztHu1jTg4%2FLTiZUETeFh98%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Cs1-02
+74	23	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Cs1-03?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721702&Signature=fu1usyKgnF8dHtSoS%2FlP1okeTIU%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Cs1-03
+75	23	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Cs1-04?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721707&Signature=M%2BD7HbcmGOdr11s2aoYrqvryQnU%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Cs1-04
+76	24	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch4-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721820&Signature=YRRNAIBdm1sLpGlz5UNgmeCs1XI%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Ch4-1
+78	24	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch4-3?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721828&Signature=Bhwb0i5gFgGEfTsHdkDEaSca1GU%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ch4-3
+79	24	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch4-4?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721832&Signature=35GbUXZn7afavk4oelVztNTSyh0%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ch4-4
+80	25	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ap4-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574722058&Signature=B25Pyh5T1g4QCg2%2BrnL7dvTuHE0%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Ap4-1
+82	25	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ap4-3?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574722072&Signature=uaUsODmfKdmPcX5NmYJkHFmNHNo%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ap4-3
 31	9	https://portalvilabucket.s3.sa-east-1.amazonaws.com/ap3-5?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698124&Signature=c%2BZXASVxKpm7fvnL9gJ2UhO93mk%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/ap3-5
 32	10	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch2-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698322&Signature=6MB2m4jIkD5j%2FtYkSbPQObWNvYE%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Ch2-1
 33	10	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch2-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574698329&Signature=knwQck3W6bGq%2FVQzjgtZCwlmmHM%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ch2-2
@@ -716,6 +743,11 @@ COPY "public"."property_photos" ("id", "property_id", "url", "alt", "iscover", "
 64	20	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Br3-1?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574714458&Signature=cgwthwp29I8a7xpjG3y4ojXeMMY%3D&x-amz-acl=public-read	\N	t	https://ik.imagekit.io/2agnc6wu5cbty/Br3-1
 65	20	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Br3-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574714463&Signature=qYSgzWjEUqS80r7Om%2BuAs0YX7rk%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Br3-2
 66	20	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Br3-3?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574714468&Signature=uVPM8PlbBXYylBZ8RVeBk%2FEYETw%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Br3-3
+68	21	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Kt2-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574720625&Signature=GlMd1dci9ZeMbO2f%2FzpAeI31s4I%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Kt2-2
+70	22	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Kt5-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=jpg&Expires=1574720818&Signature=ZC9PBTfVLN4tQHtrW5vjXaufBiI%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Kt5-2
+77	24	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ch4-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574721824&Signature=WaVWJphPY8F%2FFvvdpgcHR39Jl1c%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ch4-2
+81	25	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ap4-2?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574722065&Signature=DciMzEJ%2FILyihHOqDthf%2FUPH0Hw%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ap4-2
+83	25	https://portalvilabucket.s3.sa-east-1.amazonaws.com/Ap4-4?AWSAccessKeyId=AKIA5D3PRUX7ESTDKQ3J&Content-Type=png&Expires=1574722077&Signature=fg%2F3C0J2WeNVYtro%2F10LKSxK20E%3D&x-amz-acl=public-read	\N	f	https://ik.imagekit.io/2agnc6wu5cbty/Ap4-4
 \.
 
 
@@ -804,14 +836,14 @@ SELECT pg_catalog.setval('"public"."neighborhood_id_seq"', 10, true);
 -- Name: property_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dumzfnczlxyogr
 --
 
-SELECT pg_catalog.setval('"public"."property_id_seq"', 20, true);
+SELECT pg_catalog.setval('"public"."property_id_seq"', 25, true);
 
 
 --
 -- Name: property_photos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dumzfnczlxyogr
 --
 
-SELECT pg_catalog.setval('"public"."property_photos_id_seq"', 66, true);
+SELECT pg_catalog.setval('"public"."property_photos_id_seq"', 83, true);
 
 
 --
